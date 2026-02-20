@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { formatLeaves, formatShares, formatProbability, timeAgo } from "@/lib/utils";
+import { formatCoins, formatShares, formatProbability, timeAgo } from "@/lib/utils";
 import type { Trade } from "@/lib/types";
-import LeafIcon from "@/components/leaf-icon";
+import CoinIcon from "@/components/coin-icon";
 
 interface RecentTradesProps {
   trades: (Trade & {
@@ -65,7 +65,7 @@ export default function RecentTrades({ trades, compact = false }: RecentTradesPr
                 >
                   {question}
                 </Link>
-                <span className="text-muted"> · {formatLeaves(trade.amount)} <LeafIcon /></span>
+                <span className="text-muted"> · {formatCoins(trade.amount)} <CoinIcon /></span>
               </div>
             );
           })}
@@ -110,7 +110,7 @@ export default function RecentTrades({ trades, compact = false }: RecentTradesPr
               )}
             </div>
             <div className="flex items-center gap-1.5 md:gap-2 text-muted shrink-0">
-              <span className="whitespace-nowrap inline-flex items-center gap-0.5">{formatLeaves(trade.amount)} <LeafIcon /></span>
+              <span className="whitespace-nowrap inline-flex items-center gap-0.5">{formatCoins(trade.amount)} <CoinIcon /></span>
               <span className="whitespace-nowrap hidden sm:inline">{formatShares(trade.shares)} shares</span>
               <span className="whitespace-nowrap hidden md:inline">
                 {formatProbability(trade.prob_before)} →{" "}

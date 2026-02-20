@@ -1,17 +1,16 @@
-# Timbermarket - Prediction Market Platform
- 
-## Project Overview
-Timbermarket is a prediction market platform built for TreeHacks 2026 hackathon. Users buy and sell shares on yes/no questions using an Automated Market Maker (AMM) algorithm. The platform uses "leaves" as its currency.
+# HackyMarket - Prediction Market Platform
 
-**Domain**: timbermarket.lol
+## Project Overview
+HackyMarket is a prediction market platform built for Hacklytics 2026. Users buy and sell shares on yes/no questions using an Automated Market Maker (AMM) algorithm. The platform uses "coins" as its currency.
+
+**Domain**: hackymarket.lol
 
 ## Tech Stack
 - **Frontend**: Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4
 - **Backend**: Next.js API Routes
 - **Database**: Supabase (PostgreSQL)
-- **Auth**: Supabase Auth
+- **Auth**: Supabase Auth (Google OAuth only)
 - **Deployment**: Vercel
-- **Phone Verification**: Twilio Verify API
 - **Charts**: Recharts
 
 ## Branch Strategy
@@ -23,11 +22,9 @@ Timbermarket is a prediction market platform built for TreeHacks 2026 hackathon.
 ## Core Features
 
 ### 1. Authentication & Onboarding
-- Users sign up with username and password (no email)
-- Synthetic email (`{username}@timbermarket.lol`) used internally for Supabase Auth
-- Phone number verification via Twilio Verify API required for approval
-- Approved users receive 1000 starting leaves
-- Location: `src/app/(auth)/`
+- Sign in with Google only (one-click). No signup page, no phone verification.
+- New users: after first Google sign-in, redirect to `/set-username` to choose a username, then into the app with 1000 starting coins.
+- Location: `src/app/(auth)/` (login, set-username)
 
 ### 2. Markets
 - List of active and resolved markets
@@ -67,7 +64,7 @@ Timbermarket is a prediction market platform built for TreeHacks 2026 hackathon.
 ## Database Schema
 
 ### Tables
-- **profiles**: User accounts (balance, username, phone_number, is_admin, is_approved)
+- **profiles**: User accounts (balance, username, is_admin, is_approved, onboarding_complete)
 - **markets**: Questions, pool state, probability, status, resolution
 - **trades**: Immutable ledger of all buy/sell actions
 - **positions**: Aggregated per-user-per-market holdings
@@ -96,9 +93,7 @@ Timbermarket is a prediction market platform built for TreeHacks 2026 hackathon.
 
 ### API Routes
 - `src/app/api/trade/route.ts`: Execute buy trades
-- `src/app/api/auth/signup/route.ts`: Server-side signup (creates user with synthetic email)
-- `src/app/api/verify-phone/send/route.ts`: Send phone verification OTP via Twilio
-- `src/app/api/verify-phone/check/route.ts`: Verify phone OTP and approve user
+- `src/app/api/auth/set-username/route.ts`: Set username for new users (onboarding)
 - `src/app/api/admin/create-market/route.ts`: Create new market
 - `src/app/api/admin/resolve-market/route.ts`: Resolve market
 
@@ -107,31 +102,20 @@ Timbermarket is a prediction market platform built for TreeHacks 2026 hackathon.
 - `src/lib/types.ts`: TypeScript interfaces
 - `src/lib/supabase/server.ts`: Supabase server client
 - `src/lib/supabase/client.ts`: Supabase client-side client
-- `src/lib/utils.ts`: Utility functions (formatLeaves, etc.)
+- `src/lib/utils.ts`: Utility functions (formatCoins, etc.)
 
 ### Database
 - `supabase/migrations/001_create_tables.sql`: Schema
 - `supabase/migrations/002_create_rls_policies.sql`: RLS policies
 - `supabase/migrations/003_create_functions.sql`: PostgreSQL functions
-- `supabase/migrations/009_phone_verification.sql`: Phone number column, drops QR code tables
+- `supabase/migrations/025_single_signin_onboarding.sql`: onboarding_complete, handle_new_user for Google-only sign-in
 
-## TreeHacks Context
-
-### Prize Tracks (14 total)
-- AI Track (OpenAI)
-- Cloud AI Track (Google)
-- Edge AI Track (NVIDIA)
-- Education Track (Zoom)
-- Healthcare Track (OpenEvidence)
-- Human Flourishing Track (Anthropic)
-- Inference Track (Modal)
-- Sustainability Track (Stanford Econpreneurship)
-- Y Combinator Award
+## Hacklytics Context
 
 ### Platform Use Cases
 - Predict winners of prize tracks
 - Predict project outcomes
-- Team registration markets (200 bonus leaves for registering)
+- Team registration markets (200 bonus coins for registering)
 
 ### Planned Features
 - TV display route (`/tv`) for leaderboard and recent activity
@@ -150,9 +134,7 @@ Required in `.env.local`:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
-- `TWILIO_ACCOUNT_SID`
-- `TWILIO_AUTH_TOKEN`
-- `TWILIO_VERIFY_SERVICE_SID`
+- Google OAuth: configure in Supabase Dashboard (Auth → Providers → Google) and set redirect URLs per `GOOGLE_OAUTH_SETUP.md`
 
 ### Deployment
 - Deployed on Vercel
@@ -162,24 +144,24 @@ Required in `.env.local`:
 ## Implementation Notes
 
 ### Currency Display
-- Use `formatLeaves()` utility to format leaf amounts
-- Format: "1,234 leaves" or "1.2K leaves" for large numbers
+- Use `formatCoins()` utility to format coin amounts
+- Format: "1,234 coins" or "1.2K coins" for large numbers
 
 ### Real-time Updates
 - Supabase Realtime enabled on `markets` and `trades` tables
 - Probability history updates on every trade
 
 ### Trade Mechanics
-- **Buying**: User spends leaves to get shares
-- **Selling**: User sells shares back to AMM for leaves
+- **Buying**: User spends coins to get shares
+- **Selling**: User sells shares back to AMM for coins
 - Shares have no intrinsic value until market resolves
-- At resolution: YES shares worth 1 leaf each if YES, 0 if NO (and vice versa)
+- At resolution: YES shares worth 1 coin each if YES, 0 if NO (and vice versa)
 
 ### Market Resolution
-- **YES**: YES shareholders get 1 leaf per share
-- **NO**: NO shareholders get 1 leaf per share
+- **YES**: YES shareholders get 1 coin per share
+- **NO**: NO shareholders get 1 coin per share
 - **N/A**: All users refunded their `total_invested`
-- **Percentage (0-1)**: Partial payout, e.g. 0.7 = YES shares worth 0.7 leaves, NO shares worth 0.3 leaves
+- **Percentage (0-1)**: Partial payout, e.g. 0.7 = YES shares worth 0.7 coins, NO shares worth 0.3 coins
 
 ## Current Status
 - Core functionality implemented

@@ -4,6 +4,7 @@ export interface Profile {
   balance: number;
   is_approved: boolean;
   is_admin: boolean;
+  onboarding_complete?: boolean;
   phone_number: string | null;
   created_at: string;
 }

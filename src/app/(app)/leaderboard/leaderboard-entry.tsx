@@ -1,7 +1,7 @@
 'use client';
 
-import { formatLeaves } from '@/lib/utils';
-import LeafIcon from '@/components/leaf-icon';
+import { formatCoins } from '@/lib/utils';
+import CoinIcon from '@/components/coin-icon';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -73,11 +73,11 @@ export function LeaderboardEntry({
 
         {/* Portfolio breakdown */}
         <div className="shrink-0 text-right">
-          <div className="font-bold text-foreground">{formatLeaves(portfolioValue)} <LeafIcon /></div>
+          <div className="font-bold text-foreground">{formatCoins(portfolioValue)} <CoinIcon /></div>
           <div className="text-xs text-muted">
-            <span>Bal: {formatLeaves(balance)}</span>
+            <span>Bal: {formatCoins(balance)}</span>
             {' · '}
-            <span>Pos: {formatLeaves(positionsValue)}</span>
+            <span>Pos: {formatCoins(positionsValue)}</span>
           </div>
         </div>
 
@@ -128,20 +128,20 @@ export function LeaderboardEntry({
                       {position.yes_shares > 0 && (
                         <span className="text-yes mr-3">
                           YES: {position.yes_shares.toFixed(2)} shares (
-                          {formatLeaves(yesValue)} <LeafIcon />)
+                          {formatCoins(yesValue)} <CoinIcon />)
                         </span>
                       )}
                       {position.no_shares > 0 && (
                         <span className="text-no">
                           NO: {position.no_shares.toFixed(2)} shares (
-                          {formatLeaves(noValue)} <LeafIcon />)
+                          {formatCoins(noValue)} <CoinIcon />)
                         </span>
                       )}
                     </div>
                   </div>
                   <div className="shrink-0 text-right">
                     <div className="text-sm font-medium text-foreground">
-                      {formatLeaves(totalValue)} <LeafIcon />
+                      {formatCoins(totalValue)} <CoinIcon />
                     </div>
                     <div className="text-xs text-muted">
                       @{(position.market_probability * 100).toFixed(0)}%

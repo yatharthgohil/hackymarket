@@ -19,13 +19,13 @@ const gaegu = Gaegu({
 });
 
 export const metadata: Metadata = {
-  title: "Hackymarket",
+  title: "HackyMarket",
   description: "Prediction market platform",
   icons: {
     icon: "/hackymarket_logo.svg",
   },
   openGraph: {
-    images: ["/timbermarketbackground.jpg"],
+    images: ["/hackymarket-background.jpg"],
   },
 };
 

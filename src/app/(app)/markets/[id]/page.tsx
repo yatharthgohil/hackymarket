@@ -4,7 +4,7 @@ import TradePanel from "@/components/trade-panel";
 import ProbabilityChart from "@/components/probability-chart";
 import RecentTrades from "@/components/recent-trades";
 import MarketComments from "@/components/market-comments";
-import { formatProbability, timeAgo, formatLeaves } from "@/lib/utils";
+import { formatProbability, timeAgo, formatCoins } from "@/lib/utils";
 import type { Market, Position, Trade, CommentWithProfile } from "@/lib/types";
 
 export default async function MarketPage({
@@ -132,7 +132,7 @@ export default async function MarketPage({
               </div>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-muted">
-              <span className="font-medium whitespace-nowrap">{formatLeaves(typedMarket.volume)} Vol.</span>
+              <span className="font-medium whitespace-nowrap">{formatCoins(typedMarket.volume)} Vol.</span>
               <span className="whitespace-nowrap">{traderCount} {traderCount === 1 ? "trader" : "traders"}</span>
               <span className="whitespace-nowrap">{timeAgo(typedMarket.created_at)}</span>
               <span className="whitespace-nowrap">{commentsWithPositions.length} comment{commentsWithPositions.length !== 1 ? 's' : ''}</span>
@@ -147,7 +147,7 @@ export default async function MarketPage({
           {/* Desktop: Side by side layout */}
           <div className="hidden md:flex md:items-start md:justify-between">
             <div className="flex flex-wrap items-center gap-3 text-sm text-muted">
-              <span className="font-medium whitespace-nowrap">{formatLeaves(typedMarket.volume)} Vol.</span>
+              <span className="font-medium whitespace-nowrap">{formatCoins(typedMarket.volume)} Vol.</span>
               <span>•</span>
               <span className="whitespace-nowrap">{traderCount} {traderCount === 1 ? "trader" : "traders"}</span>
               <span>•</span>

@@ -2,17 +2,14 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function updateSession(request: NextRequest) {
-  // Check if environment variables are set
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!supabaseUrl || !supabaseAnonKey) {
     console.error("Missing Supabase environment variables");
-    // Return next response instead of error to allow site to load
     return NextResponse.next({ request });
   }
 
-  // CSRF protection: reject mutating API requests from foreign origins
   const method = request.method;
   if (
     request.nextUrl.pathname.startsWith("/api/") &&
@@ -22,25 +19,20 @@ export async function updateSession(request: NextRequest) {
   ) {
     const origin = request.headers.get("origin");
     const host = request.headers.get("host");
-    
-    // Allow requests on Vercel deployments (preview and production)
     const isVercel = host?.includes("vercel.app") || host?.includes("vercel.com");
-    
+
     if (origin) {
       try {
         const originHost = new URL(origin).host;
-        // Allow if same origin or Vercel deployment
         if (originHost !== host && !isVercel) {
           return NextResponse.json({ error: "Forbidden" }, { status: 403 });
         }
       } catch {
-        // If it's Vercel, allow it; otherwise block
         if (!isVercel) {
           return NextResponse.json({ error: "Forbidden" }, { status: 403 });
         }
       }
     } else {
-      // Allow requests without Origin header on Vercel or for certain user agents
       if (!isVercel) {
         const userAgent = request.headers.get("user-agent");
         if (userAgent && !userAgent.includes("curl") && !userAgent.includes("Postman")) {
@@ -83,77 +75,76 @@ export async function updateSession(request: NextRequest) {
     const publicRoutes = [
       "/",
       "/login",
-      "/signup",
-      "/api/auth/signup",
+      "/set-username",
       "/leaderboard",
       "/markets",
       "/tv",
     ];
     const isPublicRoute = publicRoutes.some((r) => pathname === r || pathname.startsWith(r + "/"));
 
-    // Only portfolio and admin require authentication
     const protectedRoutes = ["/portfolio", "/admin"];
     const isProtectedRoute = protectedRoutes.some((r) => pathname.startsWith(r));
 
-    // Redirect unauthenticated users to login only for protected routes
+    const isSetUsernamePage = pathname === "/set-username";
+    const isSetUsernameApi = pathname === "/api/auth/set-username";
+
     if (!user && isProtectedRoute) {
       const url = request.nextUrl.clone();
       url.pathname = "/login";
       return NextResponse.redirect(url);
     }
 
-    // Redirect authenticated users away from auth pages (login/signup)
-    const authPages = ["/login", "/signup", "/forgot-password"];
-    const isAuthPage = authPages.some((r) => pathname.startsWith(r));
-    if (user && isAuthPage) {
-      const url = request.nextUrl.clone();
-      url.pathname = "/";
-      return NextResponse.redirect(url);
-    }
+    const authPages = ["/login", "/set-username"];
+    const isAuthPage = authPages.some((r) => pathname === r || pathname.startsWith(r + "/"));
 
-    // Redirect approved users away from /verify (nothing to do there)
-    if (user && pathname === "/verify") {
+    if (user && isAuthPage) {
       try {
         const { data: profile } = await supabase
           .from("profiles")
-          .select("is_approved")
+          .select("onboarding_complete")
           .eq("id", user.id)
           .single();
 
-        if (profile?.is_approved) {
+        if (pathname === "/login" && profile?.onboarding_complete) {
+          const url = request.nextUrl.clone();
+          url.pathname = "/";
+          return NextResponse.redirect(url);
+        }
+        if (pathname === "/login" && profile && !profile.onboarding_complete) {
+          const url = request.nextUrl.clone();
+          url.pathname = "/set-username";
+          return NextResponse.redirect(url);
+        }
+        if (pathname === "/set-username" && profile?.onboarding_complete) {
           const url = request.nextUrl.clone();
           url.pathname = "/";
           return NextResponse.redirect(url);
         }
       } catch (error) {
-        // If database query fails, continue without redirect
-        console.error("Error checking profile approval:", error);
+        console.error("Middleware profile check:", error);
       }
     }
 
-    // Check approval for authenticated users accessing protected routes
-    if (user && isProtectedRoute) {
+    if (user && !isSetUsernamePage && !isSetUsernameApi) {
       try {
         const { data: profile } = await supabase
           .from("profiles")
-          .select("is_approved")
+          .select("onboarding_complete")
           .eq("id", user.id)
           .single();
 
-        if (!profile?.is_approved) {
+        if (profile && !profile.onboarding_complete) {
           const url = request.nextUrl.clone();
-          url.pathname = "/verify";
+          url.pathname = "/set-username";
           return NextResponse.redirect(url);
         }
       } catch (error) {
-        // If database query fails, allow access (fail open)
-        console.error("Error checking profile approval:", error);
+        console.error("Middleware onboarding check:", error);
       }
     }
 
     return supabaseResponse;
   } catch (error) {
-    // Log error but don't crash - return next response to allow site to load
     console.error("Middleware error:", error);
     return NextResponse.next({ request });
   }

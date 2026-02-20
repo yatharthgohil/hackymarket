@@ -5,12 +5,12 @@ import { createClient } from "@/lib/supabase/client";
 import type { Market, Trade } from "@/lib/types";
 import {
   formatProbability,
-  formatLeaves,
+  formatCoins,
   timeAgo,
 } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
-import LeafIcon from "@/components/leaf-icon";
+import CoinIcon from "@/components/coin-icon";
 import {
   AreaChart,
   Area,
@@ -239,7 +239,7 @@ export default function TVPage() {
     return () => clearInterval(id);
   }, []);
 
-  // Ambient falling leaves
+  // Ambient falling coins
   useEffect(() => {
     const spawnInterval = setInterval(() => {
       const batch = Array.from({ length: 3 + Math.floor(Math.random() * 3) }, () => {
@@ -272,7 +272,7 @@ export default function TVPage() {
       <div className="fixed inset-0 bg-background flex items-center justify-center z-[100]">
         <Image
           src="/hackymarket_logo.svg"
-          alt="Hackymarket"
+          alt="HackyMarket"
           width={120}
           height={120}
           className="animate-pulse"
@@ -288,13 +288,13 @@ export default function TVPage() {
         <Link href="/" className="flex items-center gap-5">
           <Image
             src="/hackymarket_logo.svg"
-            alt="Hackymarket"
+            alt="HackyMarket"
             width={72}
             height={72}
             className="shrink-0"
           />
           <span className="font-bold text-5xl font-[family-name:var(--font-gaegu)]" style={{ color: '#FFBC0A' }}>
-            Hackymarket
+            HackyMarket
           </span>
         </Link>
         <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center">
@@ -387,7 +387,7 @@ export default function TVPage() {
                 </div>
                 <div className="flex items-center gap-5 text-xl text-muted mb-4 shrink-0">
                   <span className="flex items-center gap-1">
-                    volume {formatLeaves(featuredMarket.volume)} <LeafIcon />
+                    volume {formatCoins(featuredMarket.volume)} <CoinIcon />
                   </span>
                   <span className="text-border">|</span>
                   <span>
@@ -467,7 +467,7 @@ export default function TVPage() {
         </div>
       </div>
 
-      {/* Ambient falling SVG leaves overlay */}
+      {/* Ambient falling SVG coins overlay */}
       <div
         className="absolute inset-0 pointer-events-none overflow-hidden z-20"
         aria-hidden
@@ -575,7 +575,7 @@ function TVMarketTickerItem({ market }: { market: RankedMarket }) {
         </div>
         <div className="flex items-center gap-4 px-5 pb-2.5 text-sm text-muted">
           <span className="flex items-center gap-1">
-            volume {formatLeaves(market.volume)} <LeafIcon />
+            volume {formatCoins(market.volume)} <CoinIcon />
           </span>
           <span>
             {market.traderCount} trader{market.traderCount !== 1 ? "s" : ""}
@@ -808,7 +808,7 @@ function TVTradeRow({ trade }: { trade: TradeWithContext }) {
         </div>
         <div className="flex items-center gap-2 text-base text-muted shrink-0">
           <span className="flex items-center gap-1">
-            {formatLeaves(trade.amount)} <LeafIcon />
+            {formatCoins(trade.amount)} <CoinIcon />
           </span>
           <span className="tabular-nums">
             {formatProbability(trade.prob_before)} → {formatProbability(trade.prob_after)}

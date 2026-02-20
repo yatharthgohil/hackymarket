@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { timeAgo, formatLeaves } from "@/lib/utils";
+import { timeAgo, formatCoins } from "@/lib/utils";
 import type { Market } from "@/lib/types";
 import {
   AreaChart,
@@ -174,7 +174,7 @@ export default function MarketCarouselCard({ market, history }: MarketCarouselCa
 
         {/* Footer */}
         <div className="flex items-center gap-3 mt-4 text-xs text-muted">
-          <span className="font-medium">{formatLeaves(market.volume)} Vol.</span>
+          <span className="font-medium">{formatCoins(market.volume)} Vol.</span>
           <span>•</span>
           <span>{timeAgo(market.created_at)}</span>
           {market.status === "resolved" && (

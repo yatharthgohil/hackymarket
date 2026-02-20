@@ -2,10 +2,10 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { formatProbability, formatLeaves, formatShares, timeAgo, cn } from "@/lib/utils";
+import { formatProbability, formatCoins, formatShares, timeAgo, cn } from "@/lib/utils";
 import type { Market, Trade } from "@/lib/types";
 import { createClient } from "@/lib/supabase/client";
-import LeafIcon from "@/components/leaf-icon";
+import CoinIcon from "@/components/coin-icon";
 
 interface AdminPanelProps {
   activeMarkets: Market[];
@@ -218,7 +218,7 @@ function CreateMarketForm() {
 
         <div>
           <label className="block text-sm text-muted mb-1">
-            Initial Liquidity (<LeafIcon />)
+            Initial Liquidity (<CoinIcon />)
           </label>
           <input
             type="number"
@@ -601,7 +601,7 @@ function RollbackTradesForm({ markets }: { markets: Market[] }) {
                     </td>
                     <td className="py-2 pr-2">
                       <span className={cn(trade.is_rolled_back && "line-through")}>
-                        {formatLeaves(trade.amount)}
+                        {formatCoins(trade.amount)}
                       </span>
                     </td>
                     <td className="py-2 pr-2">

@@ -1,5 +1,5 @@
 -- ============================================
--- Timbermarket Database Schema
+-- HackyMarket Database Schema
 -- ============================================
 
 -- Profiles: extends auth.users with app-specific data
