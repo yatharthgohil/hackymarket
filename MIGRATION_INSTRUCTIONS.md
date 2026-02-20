@@ -32,7 +32,7 @@ Or manually:
 
 ```bash
 supabase login
-cd /path/to/timbermarket
+cd /path/to/hackymarket
 psql $DATABASE_URL < apply_public_access.sql
 ```
 

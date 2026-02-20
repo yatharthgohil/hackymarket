@@ -18,7 +18,7 @@ export default function RecentComments({ comments, isLoggedIn }: RecentCommentsP
       <div className="border border-border rounded-lg p-4 bg-gradient-to-br from-card via-card to-accent/5 flex-1 min-h-0">
         <h3 className="text-sm font-semibold text-foreground mb-3">Recent Chat</h3>
         <p className="text-sm text-muted">
-          {isLoggedIn ? "No comments yet." : <><a href="/signup" className="text-accent hover:underline">Sign up</a> to see comments.</>}
+          {isLoggedIn ? "No comments yet." : <><a href="/login" className="text-accent hover:underline">Sign in</a> to see comments.</>}
         </p>
       </div>
     );

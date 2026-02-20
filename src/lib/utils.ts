@@ -2,7 +2,7 @@ export function formatProbability(prob: number): string {
   return `${Math.round(prob * 100)}%`;
 }
 
-export function formatLeaves(amount: number): string {
+export function formatCoins(amount: number): string {
   return Math.floor(amount).toLocaleString();
 }
 

@@ -1,7 +1,7 @@
 import { createClient, createServiceClient } from '@/lib/supabase/server';
-import { formatLeaves } from '@/lib/utils';
+import { formatCoins } from '@/lib/utils';
 import { LeaderboardEntry } from './leaderboard-entry';
-import LeafIcon from '@/components/leaf-icon';
+import CoinIcon from '@/components/coin-icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -102,7 +102,7 @@ export default async function LeaderboardPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-foreground mb-2"><LeafIcon /> Leaderboard</h1>
+        <h1 className="text-2xl font-bold text-foreground mb-2"><CoinIcon /> Leaderboard</h1>
         <p className="text-sm text-muted">
           Verified users ranked by total portfolio value (balance + positions)
         </p>
@@ -143,20 +143,20 @@ export default async function LeaderboardPage() {
             </div>
             <div className="py-4 px-2 text-center">
               <div className="text-2xl font-bold text-foreground">
-                {formatLeaves(
+                {formatCoins(
                   leaderboard.reduce((sum, entry) => sum + entry.balance, 0)
-                )} <LeafIcon />
+                )} <CoinIcon />
               </div>
               <div className="text-xs text-muted">Total Balance</div>
             </div>
             <div className="py-4 px-2 text-center">
               <div className="text-2xl font-bold text-foreground">
-                {formatLeaves(
+                {formatCoins(
                   leaderboard.reduce(
                     (sum, entry) => sum + entry.portfolio_value,
                     0
                   ) / leaderboard.length
-                )} <LeafIcon />
+                )} <CoinIcon />
               </div>
               <div className="text-xs text-muted">Avg Portfolio</div>
             </div>

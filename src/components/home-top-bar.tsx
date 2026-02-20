@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { formatLeaves } from "@/lib/utils";
+import { formatCoins } from "@/lib/utils";
 import ThemeToggle from "@/components/theme-toggle";
 import NavLink from "@/components/nav-link";
 import LogoutButton from "@/components/logout-button";
-import LeafIcon from "@/components/leaf-icon";
+import CoinIcon from "@/components/coin-icon";
 
 interface HomeTopBarProps {
   user: { id: string } | null;
@@ -19,12 +19,12 @@ export default function HomeTopBar({ user, profile }: HomeTopBarProps) {
           <Link href="/" className="flex items-center gap-2">
             <Image
               src="/hackymarket_logo.svg"
-              alt="Hackymarket"
+              alt="HackyMarket"
               width={36}
               height={36}
               className="shrink-0"
             />
-            <span className="font-bold text-base sm:text-lg font-[family-name:var(--font-gaegu)]" style={{ color: '#FFBC0A' }}>Hackymarket</span>
+            <span className="font-bold text-base sm:text-lg font-[family-name:var(--font-gaegu)]" style={{ color: '#FFBC0A' }}>HackyMarket</span>
           </Link>
           {/* Desktop nav - hide on mobile */}
           <div className="hidden lg:flex items-center gap-4 text-sm">
@@ -46,15 +46,15 @@ export default function HomeTopBar({ user, profile }: HomeTopBarProps) {
                 {profile.username}
               </Link>
               <span className="text-accent font-medium">
-                {formatLeaves(profile.balance)} <LeafIcon />
+                {formatCoins(profile.balance)} <CoinIcon />
               </span>
             </div>
           ) : (
             <Link
-              href="/signup"
+              href="/login"
               className="text-sm font-medium text-accent hover:text-accent/80 transition-colors"
             >
-              Sign up
+              Sign in
             </Link>
           )}
           {/* Mobile nav - show only on mobile */}

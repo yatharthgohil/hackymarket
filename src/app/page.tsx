@@ -19,16 +19,15 @@ export default async function Home() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Logged in but not approved: send to verify
   if (user) {
     const { data: profile } = await supabase
       .from("profiles")
-      .select("username, balance, is_approved")
+      .select("username, balance, is_admin, onboarding_complete")
       .eq("id", user.id)
       .single();
 
-    if (!profile?.is_approved) {
-      redirect("/verify");
+    if (profile && !profile.onboarding_complete) {
+      redirect("/set-username");
     }
   }
 

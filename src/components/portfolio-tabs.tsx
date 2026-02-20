@@ -5,11 +5,11 @@ import Link from "next/link";
 import {
   formatProbability,
   formatShares,
-  formatLeaves,
+  formatCoins,
   timeAgo,
 } from "@/lib/utils";
 import type { PositionWithMarket, TradeWithMarket } from "@/lib/types";
-import LeafIcon from "@/components/leaf-icon";
+import CoinIcon from "@/components/coin-icon";
 
 interface PortfolioTabsProps {
   positions: PositionWithMarket[];
@@ -91,7 +91,7 @@ export default function PortfolioTabs({
                           </span>
                         )}
                         <span>
-                          Invested: {formatLeaves(netInvested)} <LeafIcon />
+                          Invested: {formatCoins(netInvested)} <CoinIcon />
                         </span>
                         {pos.markets.status === "resolved" && (
                           <span className="px-1.5 py-0.5 bg-border/50 text-foreground">
@@ -103,7 +103,7 @@ export default function PortfolioTabs({
                     {pos.markets.status === "active" && (
                       <div className="text-right">
                         <p className="text-sm font-medium text-foreground">
-                          {formatLeaves(currentValue)} <LeafIcon />
+                          {formatCoins(currentValue)} <CoinIcon />
                         </p>
                         <p
                           className={`text-xs ${
@@ -111,7 +111,7 @@ export default function PortfolioTabs({
                           }`}
                         >
                           {pnl >= 0 ? "+" : ""}
-                          {formatLeaves(pnl)} <LeafIcon />
+                          {formatCoins(pnl)} <CoinIcon />
                         </p>
                       </div>
                     )}
@@ -160,7 +160,7 @@ export default function PortfolioTabs({
                   </span>
                 </div>
                 <div className="flex items-center gap-3 text-xs text-muted shrink-0">
-                  <span>{formatLeaves(trade.amount)} <LeafIcon /></span>
+                  <span>{formatCoins(trade.amount)} <CoinIcon /></span>
                   <span>{formatShares(trade.shares)} shares</span>
                   <span>
                     {formatProbability(trade.prob_before)} →{" "}

@@ -1,11 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
-import { formatLeaves } from "@/lib/utils";
+import { formatCoins } from "@/lib/utils";
 import LogoutButton from "./logout-button";
 import ThemeToggle from "./theme-toggle";
 import NavLink from "./nav-link";
-import LeafIcon from "./leaf-icon";
+import CoinIcon from "./coin-icon";
 
 export default async function Navbar() {
   const supabase = await createClient();
@@ -28,12 +28,12 @@ export default async function Navbar() {
           <Link href="/" className="flex items-center gap-2">
             <Image
               src="/hackymarket_logo.svg"
-              alt="Hackymarket"
+              alt="HackyMarket"
               width={36}
               height={36}
               className="shrink-0"
             />
-            <span className="font-bold text-base sm:text-lg font-[family-name:var(--font-gaegu)]" style={{ color: '#FFBC0A' }}>Hackymarket</span>
+            <span className="font-bold text-base sm:text-lg font-[family-name:var(--font-gaegu)]" style={{ color: '#FFBC0A' }}>HackyMarket</span>
           </Link>
           {/* Desktop nav - hide on mobile */}
           <div className="hidden lg:flex items-center gap-4 text-sm">
@@ -49,21 +49,21 @@ export default async function Navbar() {
           {user && profile ? (
             <div className="text-sm">
               <Link
-                href="/portfolio"
+                href={`/profile/${encodeURIComponent(profile.username)}`}
                 className="text-foreground hover:text-accent transition-colors mr-1"
               >
                 {profile.username}
               </Link>
               <span className="text-accent font-medium">
-                {formatLeaves(profile.balance)} <LeafIcon />
+                {formatCoins(profile.balance)} <CoinIcon />
               </span>
             </div>
           ) : (
             <Link
-              href="/signup"
+              href="/login"
               className="text-sm font-medium text-accent hover:text-accent/80 transition-colors"
             >
-              Sign up
+              Sign in
             </Link>
           )}
           {/* Mobile nav - show only on mobile */}

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { formatProbability, timeAgo, formatLeaves } from "@/lib/utils";
+import { formatProbability, timeAgo, formatCoins } from "@/lib/utils";
 import type { Market } from "@/lib/types";
 import { useRouter } from "next/navigation";
 
@@ -110,7 +110,7 @@ export default function MarketCard({
 
         {/* Footer with volume, time, and comments */}
         <div className={`flex items-center gap-3 text-sm text-muted truncate ${isResolved ? "opacity-40" : ""}`}>
-          <span className="font-medium shrink-0">{formatLeaves(market.volume)} Vol.</span>
+          <span className="font-medium shrink-0">{formatCoins(market.volume)} Vol.</span>
           {traderCount != null && (
             <>
               <span className="shrink-0">•</span>

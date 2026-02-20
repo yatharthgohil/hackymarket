@@ -1,9 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
-import { formatLeaves } from "@/lib/utils";
+import { formatCoins } from "@/lib/utils";
 import PortfolioTabs from "@/components/portfolio-tabs";
 import type { PositionWithMarket, TradeWithMarket } from "@/lib/types";
-import LeafIcon from "@/components/leaf-icon";
+import CoinIcon from "@/components/coin-icon";
 
 export default async function ProfilePage({
   params,
@@ -97,25 +97,25 @@ export default async function ProfilePage({
           <div className="py-4 px-2">
             <p className="text-xs text-muted mb-1">Total Value</p>
             <p className="text-2xl font-bold text-accent">
-              {formatLeaves(totalValue)} <span className="text-sm font-normal text-muted"><LeafIcon /></span>
+              {formatCoins(totalValue)} <span className="text-sm font-normal text-muted"><CoinIcon /></span>
             </p>
           </div>
           <div className="py-4 px-4">
             <p className="text-xs text-muted mb-1">Bal</p>
             <p className="text-2xl font-bold text-foreground">
-              {formatLeaves(balance)} <span className="text-sm font-normal text-muted"><LeafIcon /></span>
+              {formatCoins(balance)} <span className="text-sm font-normal text-muted"><CoinIcon /></span>
             </p>
           </div>
           <div className="py-4 px-4">
             <p className="text-xs text-muted mb-1">Pos</p>
             <p className="text-2xl font-bold text-foreground">
-              {formatLeaves(positionsValue)} <span className="text-sm font-normal text-muted"><LeafIcon /></span>
+              {formatCoins(positionsValue)} <span className="text-sm font-normal text-muted"><CoinIcon /></span>
             </p>
           </div>
           <div className="py-4 px-4">
             <p className="text-xs text-muted mb-1">Total P/L</p>
             <p className={`text-2xl font-bold ${totalPnL >= 0 ? 'text-yes' : 'text-no'}`}>
-              {totalPnL >= 0 ? '+' : ''}{formatLeaves(totalPnL)} <span className="text-sm font-normal text-muted"><LeafIcon /></span>
+              {totalPnL >= 0 ? '+' : ''}{formatCoins(totalPnL)} <span className="text-sm font-normal text-muted"><CoinIcon /></span>
             </p>
           </div>
         </div>

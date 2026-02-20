@@ -8,9 +8,9 @@ import {
   calculateSellPayout,
   getProbabilityAfterSell,
 } from "@/lib/amm";
-import { formatProbability, formatShares, formatLeaves } from "@/lib/utils";
+import { formatProbability, formatShares, formatCoins } from "@/lib/utils";
 import type { Market, Position } from "@/lib/types";
-import LeafIcon from "@/components/leaf-icon";
+import CoinIcon from "@/components/coin-icon";
 
 interface TradePanelProps {
   market: Market;
@@ -222,7 +222,7 @@ export default function TradePanel({
       {/* Amount input */}
       <div className="mb-4">
         <label className="block text-xs text-muted mb-1">
-          {mode === "BUY" ? <>Amount (<LeafIcon />)</> : "Shares to sell"}
+          {mode === "BUY" ? <>Amount (<CoinIcon />)</> : "Shares to sell"}
         </label>
         <input
           type="number"
@@ -236,7 +236,7 @@ export default function TradePanel({
         />
         {mode === "BUY" && (
           <p className="text-xs text-muted mt-1">
-            Balance: {formatLeaves(balance)} <LeafIcon />
+            Balance: {formatCoins(balance)} <CoinIcon />
           </p>
         )}
         {mode === "SELL" && position && (
@@ -259,14 +259,14 @@ export default function TradePanel({
                 <div className="flex justify-between">
                   <span className="text-muted">Auto-redeemed</span>
                   <span className="text-yes">
-                    +{formatLeaves(previewRedeemed)} <LeafIcon />
+                    +{formatCoins(previewRedeemed)} <CoinIcon />
                   </span>
                 </div>
               )}
               <div className="flex justify-between">
                 <span className="text-muted">Potential payout</span>
                 <span className="text-yes">
-                  {formatLeaves(previewPayout)} <LeafIcon />
+                  {formatCoins(previewPayout)} <CoinIcon />
                 </span>
               </div>
               <div className="flex justify-between">
@@ -279,7 +279,7 @@ export default function TradePanel({
               <div className="flex justify-between">
                 <span className="text-muted">Payout</span>
                 <span className="text-yes">
-                  {formatLeaves(previewPayout)} <LeafIcon />
+                  {formatCoins(previewPayout)} <CoinIcon />
                 </span>
               </div>
               <div className="flex justify-between">
