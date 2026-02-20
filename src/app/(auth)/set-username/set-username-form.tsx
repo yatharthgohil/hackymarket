@@ -59,7 +59,7 @@ export default function SetUsernameForm() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="e.g. trader_alice"
-            className="w-full px-3 py-2 bg-card border border-border rounded-lg text-foreground focus:outline-none focus:border-accent"
+            className="w-full px-3 py-2 bg-white border border-border/60 rounded-lg text-card-text focus:outline-none focus:ring-2 focus:ring-accent/40 shadow-sm"
             required
             minLength={2}
             maxLength={30}
@@ -72,7 +72,7 @@ export default function SetUsernameForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-2 bg-accent hover:bg-accent-hover text-background font-medium rounded-lg transition-colors disabled:opacity-50"
+          className="w-full py-2 rounded-lg font-medium btn-accent disabled:opacity-50 disabled:transform-none disabled:shadow-none"
         >
           {loading ? "Saving..." : "Save"}
         </button>

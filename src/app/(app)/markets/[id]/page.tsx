@@ -105,59 +105,56 @@ export default async function MarketPage({
   return (
     <div>
       {/* Header */}
-      <div className="bg-card border border-border rounded-lg p-4 md:p-6 mb-6">
+      <div className="bg-card border border-border/60 rounded-xl p-4 md:p-6 mb-6 shadow-sm">
         <div className="flex flex-col gap-4">
-          {/* Title and description */}
           <div>
-            <h1 className="text-xl md:text-2xl font-bold mb-2">{typedMarket.question}</h1>
+            <h1 className="text-xl md:text-2xl font-bold mb-2 text-card-text">{typedMarket.question}</h1>
             {typedMarket.description && (
-              <p className="text-muted text-sm">{typedMarket.description}</p>
+              <p className="text-card-muted text-sm">{typedMarket.description}</p>
             )}
           </div>
 
-          {/* Mobile: Probabilities first, then metadata below */}
           <div className="md:hidden">
             <div className="flex items-center gap-8 justify-center mb-3">
               <div className="text-center">
                 <div className="text-3xl font-bold text-yes">
                   {formatProbability(typedMarket.probability)}
                 </div>
-                <div className="text-xs text-muted mt-1">Yes</div>
+                <div className="text-xs text-card-muted mt-1">Yes</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-no">
                   {formatProbability(1 - typedMarket.probability)}
                 </div>
-                <div className="text-xs text-muted mt-1">No</div>
+                <div className="text-xs text-card-muted mt-1">No</div>
               </div>
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-muted">
+            <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-card-muted">
               <span className="font-medium whitespace-nowrap">{formatCoins(typedMarket.volume)} Vol.</span>
               <span className="whitespace-nowrap">{traderCount} {traderCount === 1 ? "trader" : "traders"}</span>
               <span className="whitespace-nowrap">{timeAgo(typedMarket.created_at)}</span>
               <span className="whitespace-nowrap">{commentsWithPositions.length} comment{commentsWithPositions.length !== 1 ? 's' : ''}</span>
               {typedMarket.status === "resolved" && (
-                <span className="px-2 py-0.5 bg-border/50 rounded text-foreground text-xs font-medium whitespace-nowrap">
+                <span className="px-2 py-0.5 bg-gray-100 rounded text-card-text text-xs font-medium whitespace-nowrap">
                   Resolved: {typedMarket.resolution}
                 </span>
               )}
             </div>
           </div>
 
-          {/* Desktop: Side by side layout */}
           <div className="hidden md:flex md:items-start md:justify-between">
-            <div className="flex flex-wrap items-center gap-3 text-sm text-muted">
+            <div className="flex flex-wrap items-center gap-3 text-sm text-card-muted">
               <span className="font-medium whitespace-nowrap">{formatCoins(typedMarket.volume)} Vol.</span>
-              <span>•</span>
+              <span>·</span>
               <span className="whitespace-nowrap">{traderCount} {traderCount === 1 ? "trader" : "traders"}</span>
-              <span>•</span>
+              <span>·</span>
               <span className="whitespace-nowrap">{timeAgo(typedMarket.created_at)}</span>
-              <span>•</span>
+              <span>·</span>
               <span className="whitespace-nowrap">{commentsWithPositions.length} comment{commentsWithPositions.length !== 1 ? 's' : ''}</span>
               {typedMarket.status === "resolved" && (
                 <>
-                  <span>•</span>
-                  <span className="px-2 py-0.5 bg-border/50 rounded text-foreground text-xs font-medium whitespace-nowrap">
+                  <span>·</span>
+                  <span className="px-2 py-0.5 bg-gray-100 rounded text-card-text text-xs font-medium whitespace-nowrap">
                     Resolved: {typedMarket.resolution}
                   </span>
                 </>
@@ -168,13 +165,13 @@ export default async function MarketPage({
                 <div className="text-3xl font-bold text-yes">
                   {formatProbability(typedMarket.probability)}
                 </div>
-                <div className="text-xs text-muted mt-1">Yes</div>
+                <div className="text-xs text-card-muted mt-1">Yes</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-no">
                   {formatProbability(1 - typedMarket.probability)}
                 </div>
-                <div className="text-xs text-muted mt-1">No</div>
+                <div className="text-xs text-card-muted mt-1">No</div>
               </div>
             </div>
           </div>

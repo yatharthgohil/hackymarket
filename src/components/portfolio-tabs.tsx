@@ -31,13 +31,13 @@ export default function PortfolioTabs({
   return (
     <div>
       {/* Tab toggle */}
-      <div className="flex gap-4 mb-4 border-b border-border">
+      <div className="flex gap-4 mb-4 border-b border-white/20">
         <button
           onClick={() => setTab("positions")}
           className={`pb-2 text-sm font-medium transition-colors ${
             tab === "positions"
-              ? "text-foreground border-b-2 border-accent"
-              : "text-muted hover:text-foreground"
+              ? "text-white border-b-2 border-accent"
+              : "text-white/60 hover:text-white"
           }`}
         >
           Positions ({activePositions.length})
@@ -46,8 +46,8 @@ export default function PortfolioTabs({
           onClick={() => setTab("trades")}
           className={`pb-2 text-sm font-medium transition-colors ${
             tab === "trades"
-              ? "text-foreground border-b-2 border-accent"
-              : "text-muted hover:text-foreground"
+              ? "text-white border-b-2 border-accent"
+              : "text-white/60 hover:text-white"
           }`}
         >
           Trades ({trades.length})
@@ -58,7 +58,7 @@ export default function PortfolioTabs({
       {tab === "positions" && (
         <div>
           {activePositions.length === 0 && (
-            <p className="text-muted text-sm py-4">
+            <p className="text-white/60 text-sm py-4">
               No positions yet. Start trading on a market!
             </p>
           )}
@@ -73,20 +73,20 @@ export default function PortfolioTabs({
 
             return (
               <Link key={pos.id} href={`/markets/${pos.market_id}`} className="block">
-                <div className="border-b border-border py-4 px-2 hover:bg-card-hover/30 transition-colors">
+                <div className="border-b border-white/15 py-4 px-2 hover:bg-white/5 transition-colors">
                   <div className="flex items-start justify-between">
                     <div className="flex-1 mr-4">
-                      <p className="text-sm font-medium text-foreground mb-1">
+                      <p className="text-sm font-medium text-white mb-1">
                         {pos.markets.question}
                       </p>
-                      <div className="flex items-center gap-3 text-xs text-muted">
+                      <div className="flex items-center gap-3 text-xs text-white/60">
                         {pos.yes_shares > 0 && (
-                          <span className="text-yes">
+                          <span className="text-yes-on-blue">
                             {formatShares(pos.yes_shares)} YES
                           </span>
                         )}
                         {pos.no_shares > 0 && (
-                          <span className="text-no">
+                          <span className="text-no-on-blue">
                             {formatShares(pos.no_shares)} NO
                           </span>
                         )}
@@ -94,7 +94,7 @@ export default function PortfolioTabs({
                           Invested: {formatCoins(netInvested)} <CoinIcon />
                         </span>
                         {pos.markets.status === "resolved" && (
-                          <span className="px-1.5 py-0.5 bg-border/50 text-foreground">
+                          <span className="px-1.5 py-0.5 bg-white/10 text-white/80">
                             Resolved {pos.markets.resolution}
                           </span>
                         )}
@@ -102,12 +102,12 @@ export default function PortfolioTabs({
                     </div>
                     {pos.markets.status === "active" && (
                       <div className="text-right">
-                        <p className="text-sm font-medium text-foreground">
+                        <p className="text-sm font-medium text-white">
                           {formatCoins(currentValue)} <CoinIcon />
                         </p>
                         <p
                           className={`text-xs ${
-                            pnl >= 0 ? "text-yes" : "text-no"
+                            pnl >= 0 ? "text-yes-on-blue" : "text-no-on-blue"
                           }`}
                         >
                           {pnl >= 0 ? "+" : ""}
@@ -127,39 +127,39 @@ export default function PortfolioTabs({
       {tab === "trades" && (
         <div>
           {trades.length === 0 && (
-            <p className="text-muted text-sm py-4">No trades yet.</p>
+            <p className="text-white/60 text-sm py-4">No trades yet.</p>
           )}
           {trades.map((trade) => (
             <Link key={trade.id} href={`/markets/${trade.market_id}`} className="block">
-              <div className="flex items-center justify-between py-3 px-2 border-b border-border hover:bg-card-hover/30 transition-colors text-sm">
+              <div className="flex items-center justify-between py-3 px-2 border-b border-white/15 hover:bg-white/5 transition-colors text-sm">
                 <div className="flex items-center gap-2">
                   <span
-                    className={`text-xs px-1.5 py-0.5 ${
+                    className={`text-xs px-1.5 py-0.5 rounded ${
                       trade.type === "BUY"
-                        ? "bg-yes/10 text-yes"
+                        ? "bg-yes/20 text-yes-on-blue"
                         : trade.type === "REDEEM"
-                        ? "bg-accent/10 text-accent"
-                        : "bg-no/10 text-no"
+                        ? "bg-accent/20 text-accent-on-blue"
+                        : "bg-no/20 text-no-on-blue"
                     }`}
                   >
                     {trade.type}
                   </span>
                   {trade.type === "REDEEM" ? (
-                    <span className="text-accent">pairs</span>
+                    <span className="text-accent-on-blue">pairs</span>
                   ) : (
                     <span
                       className={
-                        trade.outcome === "YES" ? "text-yes" : "text-no"
+                        trade.outcome === "YES" ? "text-yes-on-blue" : "text-no-on-blue"
                       }
                     >
                       {trade.outcome}
                     </span>
                   )}
-                  <span className="text-muted truncate max-w-xs">
+                  <span className="text-white/70 truncate max-w-xs">
                     {trade.markets.question}
                   </span>
                 </div>
-                <div className="flex items-center gap-3 text-xs text-muted shrink-0">
+                <div className="flex items-center gap-3 text-xs text-white/60 shrink-0">
                   <span>{formatCoins(trade.amount)} <CoinIcon /></span>
                   <span>{formatShares(trade.shares)} shares</span>
                   <span>

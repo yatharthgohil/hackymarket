@@ -53,8 +53,8 @@ export default function SuggestMarket({ isLoggedIn }: SuggestMarketProps) {
   }
 
   return (
-    <div className="border border-border rounded-lg p-4 bg-gradient-to-br from-card via-card to-accent/5">
-      <h3 className="text-sm font-semibold text-foreground mb-3">
+    <div className="rounded-xl p-4 bg-card shadow-sm border border-border/60">
+      <h3 className="text-sm font-semibold text-card-text mb-3">
         Suggest a Market
       </h3>
 
@@ -65,7 +65,7 @@ export default function SuggestMarket({ isLoggedIn }: SuggestMarketProps) {
       )}
 
       {!isLoggedIn ? (
-        <p className="text-sm text-muted">
+        <p className="text-sm text-card-muted">
           <a href="/login" className="text-accent hover:underline">Sign in</a> to suggest a market idea.
         </p>
       ) : (
@@ -77,10 +77,11 @@ export default function SuggestMarket({ isLoggedIn }: SuggestMarketProps) {
               placeholder="Will X happen by Y date?"
               maxLength={500}
               rows={3}
-              className="w-full px-3 py-2 bg-background border border-border rounded-lg
-                         text-foreground text-sm focus:outline-none focus:border-accent transition-colors resize-none"
+              className="w-full px-3 py-2 bg-white border border-border/60 rounded-lg
+                         text-card-text text-sm placeholder:text-card-muted/60
+                         focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent transition-all resize-none"
             />
-            <span className="text-xs text-muted mt-1 block text-right">
+            <span className="text-xs text-card-muted mt-1 block text-right">
               {question.length}/500
             </span>
           </div>
@@ -89,8 +90,7 @@ export default function SuggestMarket({ isLoggedIn }: SuggestMarketProps) {
             <button
               type="submit"
               disabled={loading || !question.trim()}
-              className="px-4 py-1.5 bg-accent text-background text-sm font-medium rounded-lg
-                         hover:opacity-90 transition-opacity disabled:opacity-50"
+              className="px-4 py-2 rounded-lg text-sm btn-accent disabled:opacity-50 disabled:transform-none disabled:shadow-none"
             >
               {loading ? "Submitting..." : "Submit"}
             </button>

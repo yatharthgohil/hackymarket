@@ -8,7 +8,7 @@ export default function Footer() {
   if (pathname === "/tv") return null;
 
   return (
-    <footer className="w-full py-6 text-center text-xl text-foreground/85 font-[family-name:var(--font-gaegu)]">
+    <footer className="w-full py-6 text-center text-xl font-bold text-white/80 font-[family-name:var(--font-gaegu)]">
       Made with love.
     </footer>
   );

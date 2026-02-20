@@ -71,8 +71,8 @@ export default function ProbabilityChart({ data, resolvedAt }: ProbabilityChartP
   }
 
   return (
-    <div className="bg-card border border-border rounded-lg p-4">
-      <h3 className="text-sm text-muted mb-3">Probability</h3>
+    <div className="bg-card border border-border/60 rounded-xl p-4 shadow-sm">
+      <h3 className="text-sm text-card-muted mb-3">Probability</h3>
       <div style={{ width: '100%', height: '320px', minHeight: '320px', paddingBottom: '10px' }}>
         <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -5, bottom: 15 }}>
@@ -103,7 +103,7 @@ export default function ProbabilityChart({ data, resolvedAt }: ProbabilityChartP
                 });
               }
             }}
-            stroke="var(--color-muted)"
+            stroke="var(--color-card-muted)"
             fontSize={11}
             tickLine={false}
             axisLine={false}
@@ -113,7 +113,7 @@ export default function ProbabilityChart({ data, resolvedAt }: ProbabilityChartP
             domain={[0, 100]}
             ticks={[0, 25, 50, 75, 100]}
             tickFormatter={(val) => `${val}%`}
-            stroke="var(--color-muted)"
+            stroke="var(--color-card-muted)"
             fontSize={11}
             tickLine={false}
             axisLine={false}
@@ -126,7 +126,7 @@ export default function ProbabilityChart({ data, resolvedAt }: ProbabilityChartP
               border: "1px solid var(--color-border)",
               borderRadius: "8px",
               fontSize: "12px",
-              color: "var(--color-foreground)",
+              color: "var(--color-card-text)",
             }}
             labelFormatter={(val) => new Date(val).toLocaleString()}
             formatter={(value) => [`${value}%`, "Probability"]}

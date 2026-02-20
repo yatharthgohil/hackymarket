@@ -77,27 +77,24 @@ export default function MarketCarouselCard({ market, history }: MarketCarouselCa
 
   return (
     <Link href={`/markets/${market.id}`} className="block h-full w-full">
-      <div className="bg-card border border-border rounded-lg p-6 hover:border-accent/30 hover:shadow-md transition-all h-full w-full flex flex-col">
-        {/* Header with question */}
-        <h3 className="text-foreground font-bold text-xl leading-snug mb-4">
+      <div className="bg-card border border-border/60 rounded-xl p-6 hover:shadow-md transition-all h-full w-full flex flex-col shadow-sm">
+        <h3 className="text-card-text font-bold text-xl leading-snug mb-4">
           {market.question}
         </h3>
 
-        {/* YES/NO percentages */}
         <div className="flex gap-8 mb-4">
           <div>
             <div className="text-4xl font-bold text-yes">{yesPercent}%</div>
-            <div className="text-sm text-muted">Yes</div>
+            <div className="text-sm text-card-muted">Yes</div>
           </div>
           <div>
             <div className="text-4xl font-bold text-no">{noPercent}%</div>
-            <div className="text-sm text-muted">No</div>
+            <div className="text-sm text-card-muted">No</div>
           </div>
         </div>
 
-        {/* Probability chart */}
-        <div className="flex-1 bg-muted/20 border border-border rounded-lg p-4 min-h-0">
-          <h4 className="text-sm text-muted mb-3">Probability</h4>
+        <div className="flex-1 bg-gray-50 border border-border/30 rounded-lg p-4 min-h-0">
+          <h4 className="text-sm text-card-muted mb-3">Probability</h4>
           {rawData.length > 0 ? (
             <div style={{ width: '100%', height: '320px', minHeight: '320px', paddingBottom: '10px' }}>
               <ResponsiveContainer width="100%" height="100%">
@@ -127,7 +124,7 @@ export default function MarketCarouselCard({ market, history }: MarketCarouselCa
                       });
                     }
                   }}
-                  stroke="var(--color-muted)"
+                  stroke="var(--color-card-muted)"
                   fontSize={11}
                   tickLine={false}
                   axisLine={false}
@@ -137,7 +134,7 @@ export default function MarketCarouselCard({ market, history }: MarketCarouselCa
                   domain={[0, 100]}
                   ticks={[0, 25, 50, 75, 100]}
                   tickFormatter={(val) => `${val}%`}
-                  stroke="var(--color-muted)"
+                  stroke="var(--color-card-muted)"
                   fontSize={11}
                   tickLine={false}
                   axisLine={false}
@@ -150,7 +147,7 @@ export default function MarketCarouselCard({ market, history }: MarketCarouselCa
                     border: "1px solid var(--color-border)",
                     borderRadius: "8px",
                     fontSize: "12px",
-                    color: "var(--color-foreground)",
+                    color: "var(--color-card-text)",
                   }}
                   labelFormatter={(val) => new Date(val).toLocaleString()}
                   formatter={(value) => [`${value}%`, "Probability"]}
@@ -166,14 +163,14 @@ export default function MarketCarouselCard({ market, history }: MarketCarouselCa
             </ResponsiveContainer>
             </div>
           ) : (
-            <div className="flex items-center justify-center h-full text-muted text-sm">
+            <div className="flex items-center justify-center h-full text-card-muted text-sm">
               No history data
             </div>
           )}
         </div>
 
         {/* Footer */}
-        <div className="flex items-center gap-3 mt-4 text-xs text-muted">
+        <div className="flex items-center gap-3 mt-4 text-xs text-card-muted">
           <span className="font-medium">{formatCoins(market.volume)} Vol.</span>
           <span>•</span>
           <span>{timeAgo(market.created_at)}</span>

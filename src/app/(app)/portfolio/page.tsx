@@ -80,43 +80,43 @@ export default async function PortfolioPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-foreground mb-2">Portfolio</h1>
-        <p className="text-sm text-muted">
+        <h1 className="text-4xl font-extrabold text-white mb-2">Portfolio</h1>
+        <p className="text-sm text-white/70">
           Your positions, trade history, and balance overview.
         </p>
       </div>
 
       {/* Portfolio summary */}
-      <div className="border-t border-border">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-border">
+      <div className="border-t border-white/20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-white/20">
           <div className="py-4 px-2">
-            <p className="text-xs text-muted mb-1">Total Value</p>
-            <p className="text-2xl font-bold text-accent">
-              {formatCoins(totalValue)} <span className="text-sm font-normal text-muted"><CoinIcon /></span>
+            <p className="text-xs text-white/60 mb-1">Total Value</p>
+            <p className="text-2xl font-bold text-accent-on-blue">
+              {formatCoins(totalValue)} <span className="text-sm font-normal text-white/60"><CoinIcon /></span>
             </p>
           </div>
           <div className="py-4 px-4">
-            <p className="text-xs text-muted mb-1">Bal</p>
-            <p className="text-2xl font-bold text-foreground">
-              {formatCoins(balance)} <span className="text-sm font-normal text-muted"><CoinIcon /></span>
+            <p className="text-xs text-white/60 mb-1">Bal</p>
+            <p className="text-2xl font-bold text-white">
+              {formatCoins(balance)} <span className="text-sm font-normal text-white/60"><CoinIcon /></span>
             </p>
           </div>
           <div className="py-4 px-4">
-            <p className="text-xs text-muted mb-1">Pos</p>
-            <p className="text-2xl font-bold text-foreground">
-              {formatCoins(positionsValue)} <span className="text-sm font-normal text-muted"><CoinIcon /></span>
+            <p className="text-xs text-white/60 mb-1">Pos</p>
+            <p className="text-2xl font-bold text-white">
+              {formatCoins(positionsValue)} <span className="text-sm font-normal text-white/60"><CoinIcon /></span>
             </p>
           </div>
           <div className="py-4 px-4">
-            <p className="text-xs text-muted mb-1">Total P/L</p>
-            <p className={`text-2xl font-bold ${totalPnL >= 0 ? 'text-yes' : 'text-no'}`}>
-              {totalPnL >= 0 ? '+' : ''}{formatCoins(totalPnL)} <span className="text-sm font-normal text-muted"><CoinIcon /></span>
+            <p className="text-xs text-white/60 mb-1">Total P/L</p>
+            <p className={`text-2xl font-bold ${totalPnL >= 0 ? 'text-yes-on-blue' : 'text-no-on-blue'}`}>
+              {totalPnL >= 0 ? '+' : ''}{formatCoins(totalPnL)} <span className="text-sm font-normal text-white/60"><CoinIcon /></span>
             </p>
           </div>
         </div>
       </div>
 
-      <div className="mt-8 border-t border-border pt-6">
+      <div className="mt-8 border-t border-white/20 pt-6">
         <PortfolioTabs
           positions={positions}
           trades={trades}

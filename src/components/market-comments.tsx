@@ -62,8 +62,8 @@ export default function MarketComments({
   }
 
   return (
-    <div className="bg-card border border-border rounded-lg p-4">
-      <h3 className="text-sm font-medium text-muted mb-3">Comments</h3>
+    <div className="bg-card border border-border/60 rounded-xl p-4 shadow-sm">
+      <h3 className="text-sm font-semibold text-card-text mb-3">Comments</h3>
 
       {currentUserId && (
         <form onSubmit={handleSubmit} className="mb-4">
@@ -73,13 +73,13 @@ export default function MarketComments({
             placeholder="Add a comment..."
             maxLength={1000}
             rows={2}
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground text-sm focus:outline-none focus:border-accent resize-none"
+            className="w-full px-3 py-2 bg-white border border-border/60 rounded-lg text-card-text text-sm placeholder:text-card-muted/60 focus:outline-none focus:ring-2 focus:ring-accent/40 resize-none"
           />
           {error && <p className="text-no text-sm mt-1">{error}</p>}
           <button
             type="submit"
             disabled={loading || !content.trim()}
-            className="mt-2 px-4 py-1.5 bg-accent hover:bg-accent-hover text-background text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
+            className="mt-2 px-4 py-2 rounded-lg text-sm font-medium btn-accent disabled:opacity-50 disabled:transform-none disabled:shadow-none"
           >
             {loading ? "Posting..." : "Post"}
           </button>
@@ -87,7 +87,7 @@ export default function MarketComments({
       )}
 
       {comments.length === 0 ? (
-        <p className="text-sm text-muted">
+        <p className="text-sm text-card-muted">
           {currentUserId ? "No comments yet." : <><a href="/login" className="text-accent hover:underline">Sign in</a> to see comments.</>}
         </p>
       ) : (
@@ -95,11 +95,11 @@ export default function MarketComments({
           {comments.map((comment) => (
             <div
               key={comment.id}
-              className="py-2 border-b border-border/50 last:border-0"
+              className="py-2 border-b border-border/30 last:border-0"
             >
               <div className="flex items-center justify-between mb-1">
                 <div className="flex items-center gap-2 text-xs">
-                  <span className="text-muted font-medium">
+                  <span className="text-card-text font-medium">
                     {comment.profiles.username}
                   </span>
                   {comment.positions &&
@@ -114,20 +114,20 @@ export default function MarketComments({
                         {formatShares(comment.positions.no_shares)} NO
                       </span>
                     )}
-                  <span className="text-muted">
+                  <span className="text-card-muted">
                     {timeAgo(comment.created_at)}
                   </span>
                 </div>
                 {isAdmin && (
                   <button
                     onClick={() => handleDelete(comment.id)}
-                    className="text-xs text-muted hover:text-no transition-colors"
+                    className="text-xs text-card-muted hover:text-no transition-colors"
                   >
                     Delete
                   </button>
                 )}
               </div>
-              <p className="text-sm text-foreground">{comment.content}</p>
+              <p className="text-sm text-card-text">{comment.content}</p>
             </div>
           ))}
         </div>

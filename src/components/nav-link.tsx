@@ -20,8 +20,8 @@ export default function NavLink({
       href={href}
       className={`transition-colors ${
         isActive
-          ? "text-foreground font-medium"
-          : "text-muted hover:text-foreground"
+          ? "text-white font-bold"
+          : "text-white/80 hover:text-white font-semibold"
       } ${className || ""}`}
     >
       {children}

@@ -34,58 +34,52 @@ export default function MarketCard({
 
   return (
     <Link href={`/markets/${market.id}`}>
-      <div className={`bg-card border rounded-2xl p-6 hover:shadow-lg transition-all cursor-pointer ${isResolved ? "border-border/50" : "border-border hover:border-accent/30"}`}>
-        {/* Header with question and probability – greyed out for resolved */}
-        <div className={`flex items-start justify-between gap-4 mb-6 ${isResolved ? "opacity-40" : ""}`}>
-          <h3 className={`font-semibold text-lg leading-snug flex-1 line-clamp-2 ${isResolved ? "text-muted" : "text-foreground"}`}>
+      <div className={`bg-card rounded-xl p-5 shadow-sm hover:shadow-md transition-all cursor-pointer border ${isResolved ? "border-border/40 opacity-75" : "border-border/60 hover:border-accent/40"}`}>
+        <div className={`flex items-start justify-between gap-4 mb-5 ${isResolved ? "opacity-50" : ""}`}>
+          <h3 className={`font-semibold text-base leading-snug flex-1 line-clamp-2 ${isResolved ? "text-card-muted" : "text-card-text"}`}>
             {market.question}
           </h3>
 
-          {/* Circular probability display */}
           <div className="flex flex-col items-center shrink-0">
-            <div className="relative w-20 h-20 flex items-center justify-center">
-              {/* Background circle */}
-              <div className="absolute inset-0 rounded-full border-4 border-border"></div>
-              {/* Progress circle */}
-              <svg className="absolute inset-0 -rotate-90" viewBox="0 0 80 80">
+            <div className="relative w-16 h-16 flex items-center justify-center">
+              <div className="absolute inset-0 rounded-full border-[3px] border-border/30"></div>
+              <svg className="absolute inset-0 -rotate-90" viewBox="0 0 64 64">
                 <circle
-                  cx="40"
-                  cy="40"
-                  r="36"
+                  cx="32"
+                  cy="32"
+                  r="28"
                   fill="none"
                   stroke={isResolved ? "rgb(107, 114, 128)" : prob >= 0.5 ? "#8077C8" : "rgb(239, 68, 68)"}
-                  strokeWidth="4"
-                  strokeDasharray={`${2 * Math.PI * 36}`}
-                  strokeDashoffset={`${2 * Math.PI * 36 * (1 - prob)}`}
+                  strokeWidth="3"
+                  strokeDasharray={`${2 * Math.PI * 28}`}
+                  strokeDashoffset={`${2 * Math.PI * 28 * (1 - prob)}`}
                   className="transition-all duration-500"
                 />
               </svg>
-              {/* Percentage text */}
-              <div className={`relative z-10 text-2xl font-bold ${isResolved ? "text-muted" : "text-foreground"}`}>
+              <div className={`relative z-10 text-xl font-bold ${isResolved ? "text-card-muted" : "text-card-text"}`}>
                 {probPercent}%
               </div>
             </div>
-            <span className="text-xs text-muted mt-1">chance</span>
+            <span className="text-xs text-card-muted mt-1">chance</span>
           </div>
         </div>
 
-        {/* YES/NO Buttons for active markets, Resolution banner for resolved */}
-        <div className="flex gap-3 mb-4">
+        <div className="flex gap-2.5 mb-3">
           {isResolved ? (
-            <div className={`flex-1 rounded-xl py-4 text-center border ${
+            <div className={`flex-1 rounded-lg py-3 text-center border ${
               market.resolution === "YES"
                 ? "bg-yes/10 border-yes/30"
                 : market.resolution === "NO"
                   ? "bg-no/10 border-no/30"
-                  : "bg-muted/10 border-border"
+                  : "bg-gray-100 border-border/40"
             }`}>
-              <span className="text-sm font-semibold uppercase tracking-wider text-muted">Resolved </span>
+              <span className="text-sm font-semibold uppercase tracking-wider text-card-muted">Resolved </span>
               <span className={`text-lg font-bold ${
                 market.resolution === "YES"
                   ? "text-yes"
                   : market.resolution === "NO"
                     ? "text-no"
-                    : "text-foreground"
+                    : "text-card-text"
               }`}>
                 {market.resolution ?? "—"}
               </span>
@@ -94,32 +88,31 @@ export default function MarketCard({
             <>
               <button
                 onClick={handleYesClick}
-                className="flex-1 bg-yes/10 hover:bg-yes/20 border border-yes/30 rounded-xl py-4 text-center transition-colors"
+                className="flex-1 bg-yes/10 hover:bg-yes/20 border border-yes/30 rounded-lg py-3 text-center transition-colors"
               >
-                <span className="text-yes font-semibold text-lg">Buy Yes</span>
+                <span className="text-yes font-semibold">Buy Yes</span>
               </button>
               <button
                 onClick={handleNoClick}
-                className="flex-1 bg-no/10 hover:bg-no/20 border border-no/30 rounded-xl py-4 text-center transition-colors"
+                className="flex-1 bg-no/10 hover:bg-no/20 border border-no/30 rounded-lg py-3 text-center transition-colors"
               >
-                <span className="text-no font-semibold text-lg">Buy No</span>
+                <span className="text-no font-semibold">Buy No</span>
               </button>
             </>
           )}
         </div>
 
-        {/* Footer with volume, time, and comments */}
-        <div className={`flex items-center gap-3 text-sm text-muted truncate ${isResolved ? "opacity-40" : ""}`}>
+        <div className={`flex items-center gap-2.5 text-xs text-card-muted truncate ${isResolved ? "opacity-50" : ""}`}>
           <span className="font-medium shrink-0">{formatCoins(market.volume)} Vol.</span>
           {traderCount != null && (
             <>
-              <span className="shrink-0">•</span>
+              <span className="shrink-0">·</span>
               <span className="shrink-0">{traderCount} {traderCount === 1 ? "trader" : "traders"}</span>
             </>
           )}
-          <span className="shrink-0">•</span>
+          <span className="shrink-0">·</span>
           <span className="shrink-0">{timeAgo(market.created_at)}</span>
-          <span className="shrink-0">•</span>
+          <span className="shrink-0">·</span>
           <span className="truncate">{commentCount} comment{commentCount !== 1 ? 's' : ''}</span>
         </div>
       </div>

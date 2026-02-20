@@ -36,7 +36,6 @@ export default function TradePanel({
   const [error, setError] = useState("");
   const router = useRouter();
 
-  // Update outcome when URL parameter changes
   useEffect(() => {
     if (outcomeParam === "YES" || outcomeParam === "NO") {
       setOutcome(outcomeParam);
@@ -46,7 +45,6 @@ export default function TradePanel({
   const numAmount = parseFloat(amount) || 0;
   const isActive = market.status === "active";
 
-  // Calculate preview
   let previewShares = 0;
   let previewProb = market.probability;
   let previewPayout = 0;
@@ -68,7 +66,6 @@ export default function TradePanel({
         numAmount,
         outcome
       );
-      // Account for auto-redemption of offsetting positions
       const existingOpposite = outcome === "YES"
         ? (position?.no_shares ?? 0)
         : (position?.yes_shares ?? 0);
@@ -101,7 +98,6 @@ export default function TradePanel({
   }
 
   async function handleTrade() {
-    // Redirect to login if not logged in
     if (!isLoggedIn) {
       router.push("/login");
       return;
@@ -121,7 +117,6 @@ export default function TradePanel({
       if (mode === "BUY") {
         body.amount = numAmount;
       } else {
-        // Clamp to available shares to avoid floating-point mismatch with DB
         const available =
           outcome === "YES"
             ? position?.yes_shares ?? 0
@@ -140,7 +135,6 @@ export default function TradePanel({
       const data = await res.json();
 
       if (!res.ok) {
-        // Redirect to login if unauthorized
         if (res.status === 401) {
           router.push("/login");
           return;
@@ -163,9 +157,8 @@ export default function TradePanel({
     position && (position.yes_shares > 0 || position.no_shares > 0);
 
   return (
-    <div className="bg-card border border-border rounded-lg p-4 h-full">
-      {/* Mode toggle */}
-      <div className="flex gap-1 mb-4 bg-background rounded-lg p-1">
+    <div className="bg-card border border-border/60 rounded-xl p-4 h-full shadow-sm">
+      <div className="flex gap-1 mb-4 bg-gray-100 rounded-lg p-1">
         <button
           onClick={() => {
             setMode("BUY");
@@ -173,8 +166,8 @@ export default function TradePanel({
           }}
           className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-colors ${
             mode === "BUY"
-              ? "bg-card text-foreground"
-              : "text-muted hover:text-foreground"
+              ? "bg-white text-card-text shadow-sm"
+              : "text-card-muted hover:text-card-text"
           }`}
         >
           Buy
@@ -187,22 +180,21 @@ export default function TradePanel({
           disabled={!hasPosition}
           className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-colors disabled:opacity-30 ${
             mode === "SELL"
-              ? "bg-card text-foreground"
-              : "text-muted hover:text-foreground"
+              ? "bg-white text-card-text shadow-sm"
+              : "text-card-muted hover:text-card-text"
           }`}
         >
           Sell
         </button>
       </div>
 
-      {/* Outcome toggle */}
       <div className="flex gap-2 mb-4">
         <button
           onClick={() => setOutcome("YES")}
           className={`flex-1 py-2 text-sm font-medium rounded-lg border transition-colors ${
             outcome === "YES"
               ? "border-yes bg-yes/10 text-yes"
-              : "border-border text-muted hover:text-foreground"
+              : "border-border/40 text-card-muted hover:text-card-text"
           }`}
         >
           Yes {formatProbability(market.probability)}
@@ -212,16 +204,15 @@ export default function TradePanel({
           className={`flex-1 py-2 text-sm font-medium rounded-lg border transition-colors ${
             outcome === "NO"
               ? "border-no bg-no/10 text-no"
-              : "border-border text-muted hover:text-foreground"
+              : "border-border/40 text-card-muted hover:text-card-text"
           }`}
         >
           No {formatProbability(1 - market.probability)}
         </button>
       </div>
 
-      {/* Amount input */}
       <div className="mb-4">
-        <label className="block text-xs text-muted mb-1">
+        <label className="block text-xs text-card-muted mb-1">
           {mode === "BUY" ? <>Amount (<CoinIcon />)</> : "Shares to sell"}
         </label>
         <input
@@ -232,58 +223,57 @@ export default function TradePanel({
           min="0"
           step="any"
           disabled={!isActive}
-          className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground text-lg focus:outline-none focus:border-accent disabled:opacity-50"
+          className="w-full px-3 py-2 bg-white border border-border/60 rounded-lg text-card-text text-lg focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent disabled:opacity-50 transition-all"
         />
         {mode === "BUY" && (
-          <p className="text-xs text-muted mt-1">
+          <p className="text-xs text-card-muted mt-1">
             Balance: {formatCoins(balance)} <CoinIcon />
           </p>
         )}
         {mode === "SELL" && position && (
-          <p className="text-xs text-muted mt-1">
+          <p className="text-xs text-card-muted mt-1">
             Available: {formatShares(outcome === "YES" ? position.yes_shares : position.no_shares)} shares
           </p>
         )}
       </div>
 
-      {/* Preview */}
       {numAmount > 0 && isActive && (
-        <div className="mb-4 space-y-1.5 text-sm">
+        <div className="mb-4 space-y-1.5 text-sm text-card-text">
           {mode === "BUY" ? (
             <>
               <div className="flex justify-between">
-                <span className="text-muted">Shares</span>
+                <span className="text-card-muted">Shares</span>
                 <span>{formatShares(previewShares - previewRedeemed)}</span>
               </div>
               {previewRedeemed > 0 && (
                 <div className="flex justify-between">
-                  <span className="text-muted">Auto-redeemed</span>
+                  <span className="text-card-muted">Auto-redeemed</span>
                   <span className="text-yes">
                     +{formatCoins(previewRedeemed)} <CoinIcon />
                   </span>
                 </div>
               )}
               <div className="flex justify-between">
-                <span className="text-muted">Potential payout</span>
+                <span className="text-card-muted">Potential payout</span>
                 <span className="text-yes">
                   {formatCoins(previewPayout)} <CoinIcon />
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted">New probability</span>
+                <span className="text-card-muted">New probability</span>
                 <span>{formatProbability(previewProb)}</span>
               </div>
             </>
           ) : (
             <>
               <div className="flex justify-between">
-                <span className="text-muted">Payout</span>
+                <span className="text-card-muted">Payout</span>
                 <span className="text-yes">
                   {formatCoins(previewPayout)} <CoinIcon />
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted">New probability</span>
+                <span className="text-card-muted">New probability</span>
                 <span>{formatProbability(previewProb)}</span>
               </div>
             </>
@@ -301,9 +291,9 @@ export default function TradePanel({
           numAmount <= 0 ||
           (mode === "BUY" && numAmount > balance)
         }
-        className={`w-full py-2.5 font-medium rounded-lg transition-colors disabled:opacity-50 ${
+        className={`w-full py-2.5 font-semibold rounded-lg transition-colors disabled:opacity-50 ${
           outcome === "YES"
-            ? "bg-yes hover:bg-yes/90 text-background"
+            ? "bg-yes hover:bg-yes/90 text-white"
             : "bg-no hover:bg-no/90 text-white"
         }`}
       >
@@ -316,10 +306,9 @@ export default function TradePanel({
               : `Sell ${outcome}`}
       </button>
 
-      {/* Current position */}
       {hasPosition && (
-        <div className="mt-4 pt-4 border-t border-border">
-          <p className="text-xs text-muted mb-2">Your position</p>
+        <div className="mt-4 pt-4 border-t border-border/30">
+          <p className="text-xs text-card-muted mb-2">Your position</p>
           <div className="flex gap-4 text-sm">
             {position!.yes_shares > 0 && (
               <div>

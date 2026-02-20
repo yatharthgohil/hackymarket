@@ -35,10 +35,10 @@ export function LeaderboardEntry({
   const getRankDisplay = () => {
     if (rank <= 3) {
       return (
-        <span className="text-sm font-bold text-accent">#{rank}</span>
+        <span className="text-sm font-bold text-accent-on-blue">#{rank}</span>
       );
     }
-    return <span className="text-sm text-muted">#{rank}</span>;
+    return <span className="text-sm text-white/60">#{rank}</span>;
   };
 
   const positionsValue = portfolioValue - balance;
@@ -48,7 +48,7 @@ export function LeaderboardEntry({
       {/* Main row */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center gap-4 py-4 px-2 text-left hover:bg-card-hover/30 transition-colors border-b border-border"
+        className="w-full flex items-center gap-4 py-4 px-2 text-left hover:bg-white/10 transition-colors border-b border-white/15"
       >
         {/* Rank */}
         <div className="w-8 shrink-0 text-center tabular-nums">{getRankDisplay()}</div>
@@ -59,12 +59,12 @@ export function LeaderboardEntry({
             <Link
               href={`/profile/${username}`}
               onClick={(e) => e.stopPropagation()}
-              className="text-foreground font-medium truncate hover:text-accent transition-colors"
+              className="text-white font-medium truncate hover:text-accent-on-blue transition-colors"
             >
               {username}
             </Link>
             {isCurrentUser && (
-              <span className="text-xs px-1.5 py-0.5 bg-accent/20 text-accent">
+              <span className="text-xs px-1.5 py-0.5 bg-accent/20 text-accent-on-blue rounded">
                 You
               </span>
             )}
@@ -73,8 +73,8 @@ export function LeaderboardEntry({
 
         {/* Portfolio breakdown */}
         <div className="shrink-0 text-right">
-          <div className="font-bold text-foreground">{formatCoins(portfolioValue)} <CoinIcon /></div>
-          <div className="text-xs text-muted">
+          <div className="font-bold text-accent-on-blue">{formatCoins(portfolioValue)} <CoinIcon /></div>
+          <div className="text-xs text-white/60">
             <span>Bal: {formatCoins(balance)}</span>
             {' · '}
             <span>Pos: {formatCoins(positionsValue)}</span>
@@ -82,7 +82,7 @@ export function LeaderboardEntry({
         </div>
 
         {/* Expand indicator */}
-        <div className="shrink-0 w-5 text-muted">
+        <div className="shrink-0 w-5 text-white/60">
           <svg
             className={`w-4 h-4 transition-transform ${
               isExpanded ? 'rotate-180' : ''
@@ -103,8 +103,8 @@ export function LeaderboardEntry({
 
       {/* Expanded positions */}
       {isExpanded && positions.length > 0 && (
-        <div className="border-b border-border px-2 py-3">
-          <div className="text-xs text-muted mb-2">
+        <div className="border-b border-white/15 px-2 py-3">
+          <div className="text-xs text-white/60 mb-2">
             Positions ({positions.length} markets)
           </div>
           {positions.map((position) => {
@@ -117,14 +117,14 @@ export function LeaderboardEntry({
               <Link
                 key={position.market_id}
                 href={`/markets/${position.market_id}`}
-                className="block py-2 px-2 hover:bg-card-hover/30 transition-colors"
+                className="block py-2 px-2 hover:bg-white/10 transition-colors rounded"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium text-foreground truncate">
+                    <div className="text-sm font-medium text-white truncate">
                       {position.market_question}
                     </div>
-                    <div className="text-xs text-muted mt-1">
+                    <div className="text-xs text-white/60 mt-1">
                       {position.yes_shares > 0 && (
                         <span className="text-yes mr-3">
                           YES: {position.yes_shares.toFixed(2)} shares (
@@ -132,7 +132,7 @@ export function LeaderboardEntry({
                         </span>
                       )}
                       {position.no_shares > 0 && (
-                        <span className="text-no">
+                        <span className="text-no-on-blue">
                           NO: {position.no_shares.toFixed(2)} shares (
                           {formatCoins(noValue)} <CoinIcon />)
                         </span>
@@ -140,10 +140,10 @@ export function LeaderboardEntry({
                     </div>
                   </div>
                   <div className="shrink-0 text-right">
-                    <div className="text-sm font-medium text-foreground">
+                    <div className="text-sm font-medium text-white">
                       {formatCoins(totalValue)} <CoinIcon />
                     </div>
-                    <div className="text-xs text-muted">
+                    <div className="text-xs text-white/60">
                       @{(position.market_probability * 100).toFixed(0)}%
                     </div>
                   </div>
@@ -155,7 +155,7 @@ export function LeaderboardEntry({
       )}
 
       {isExpanded && positions.length === 0 && (
-        <div className="border-b border-border px-2 py-3 text-sm text-muted">
+        <div className="border-b border-white/15 px-2 py-3 text-sm text-white/60">
           No active positions
         </div>
       )}

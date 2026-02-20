@@ -86,8 +86,8 @@ export default function HomeCarousel({ marketsWithHistory }: HomeCarouselProps) 
 
   if (!marketsWithHistory || marketsWithHistory.length === 0) {
     return (
-      <div className="border-b border-border py-8 text-center">
-        <p className="text-sm text-muted">No active markets yet.</p>
+      <div className="py-8 text-center">
+        <p className="text-lg font-bold text-white/90">No active markets yet.</p>
       </div>
     );
   }
@@ -133,7 +133,7 @@ export default function HomeCarousel({ marketsWithHistory }: HomeCarouselProps) 
           type="button"
           onClick={goPrev}
           aria-label="Previous market"
-          className="hidden lg:block p-2 text-muted hover:text-foreground transition-colors rounded border border-border hover:bg-card-hover"
+          className="hidden lg:block p-2 text-white/60 hover:text-white transition-colors rounded hover:bg-white/10"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M15 18l-6-6 6-6" />
@@ -150,7 +150,7 @@ export default function HomeCarousel({ marketsWithHistory }: HomeCarouselProps) 
               className={`w-2.5 h-2.5 rounded-full transition-colors ${
                 i === index
                   ? "bg-accent"
-                  : "bg-border hover:bg-muted"
+                  : "bg-white/30 hover:bg-white/50"
               }`}
             />
           ))}
@@ -160,7 +160,7 @@ export default function HomeCarousel({ marketsWithHistory }: HomeCarouselProps) 
           type="button"
           onClick={goNext}
           aria-label="Next market"
-          className="hidden lg:block p-2 text-muted hover:text-foreground transition-colors rounded border border-border hover:bg-card-hover"
+          className="hidden lg:block p-2 text-white/60 hover:text-white transition-colors rounded hover:bg-white/10"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M9 18l6-6-6-6" />

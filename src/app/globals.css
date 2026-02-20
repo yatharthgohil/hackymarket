@@ -1,33 +1,22 @@
 @import "tailwindcss";
 
 @theme {
-  /* Soft wood palette */
-  --color-background: #A4C7FF;
-  --color-foreground: #3d3630;
-  --color-card: #f0ebe3;
-  --color-card-hover: #e8e2d9;
-  --color-border: #d4cdc4;
-  --color-muted: #7a7269;
-  --color-yes: #8077C8;
-  --color-no: #c45c4a;
-  --color-accent: #8077C8;
-  --color-accent-hover: #6B62B8;
+  /* Hacklytics.io Golden Byte – single theme */
+  --color-background: #a4c7ff;
+  --color-foreground: #ffffff;
+  --color-card: rgba(255, 255, 255, 0.92);
+  --color-card-hover: rgba(255, 255, 255, 1);
+  --color-card-text: #1e2939;
+  --color-card-muted: #6b7280;
+  --color-border: #cbd5e1;
+  --color-muted: rgba(255, 255, 255, 0.75);
+  --color-yes: #05df72;
+  --color-no: #ef4444;
+  --color-accent: #ffbc0a;
+  --color-accent-hover: #e5a800;
+  --color-accent-stroke: #855d0e;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-/* Dark mode: softer dark, very bright text so most of the site updates */
-.dark {
-  --color-background: #1f1d1b;
-  --color-foreground: #ffffff;
-  --color-card: #2d2a26;
-  --color-card-hover: #3d3935;
-  --color-border: #4a4642;
-  --color-muted: #a8a29e;
-  --color-yes: #FE97B0;
-  --color-no: #fca5a5;
-  --color-accent: #FE97B0;
-  --color-accent-hover: #FF7FA0;
 }
 
 body {
@@ -58,11 +47,6 @@ body {
   -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.05) 100%);
 }
 
-.dark .auth-page-background::before {
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.03) 100%);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.03) 100%);
-}
-
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -78,6 +62,80 @@ input[type="number"] {
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* Yellow/accent on blue – bright yellow with subtle shadow for legibility */
+.text-accent-on-blue {
+  color: #ffbc0a;
+  text-shadow: 0 0 1px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.35);
+}
+.text-accent-on-blue:hover {
+  color: #ffc933;
+  text-shadow: 0 0 1px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Green/yes on blue – bright green with subtle shadow */
+.text-yes-on-blue {
+  color: #05df72;
+  text-shadow: 0 0 1px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Red/no on blue – subtle shadow for consistency */
+.text-no-on-blue {
+  color: var(--color-no);
+  text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+}
+
+/* Large hero/display accent text – stroke + shadow for readability on blue */
+.accent-text-hero {
+  color: var(--color-accent);
+  -webkit-text-stroke: 1.5px var(--color-accent-stroke);
+  paint-order: stroke fill;
+  filter: drop-shadow(0 2px 0 rgba(133, 77, 14, 0.6));
+}
+@media (min-width: 768px) {
+  .accent-text-hero {
+    -webkit-text-stroke-width: 2px;
+    filter: drop-shadow(0 3px 0 rgba(133, 77, 14, 0.7));
+  }
+}
+
+/* Primary accent button */
+.btn-accent {
+  background-color: var(--color-accent);
+  color: var(--color-card-text);
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+}
+.btn-accent:hover:not(:disabled) {
+  background-color: var(--color-accent-hover);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  transform: translateY(-1px);
+}
+.btn-accent:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+}
+
+/* Subtle radial glow (Hacklytics-style) for hero/content areas */
+.page-glow {
+  position: relative;
+}
+.page-glow::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255,255,255,0.35) 0%, transparent 70%);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* === AUTO-ADAPT MOBILE RULES === */

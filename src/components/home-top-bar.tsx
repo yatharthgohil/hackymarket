@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { formatCoins } from "@/lib/utils";
-import ThemeToggle from "@/components/theme-toggle";
 import NavLink from "@/components/nav-link";
 import LogoutButton from "@/components/logout-button";
 import CoinIcon from "@/components/coin-icon";
@@ -13,8 +12,8 @@ interface HomeTopBarProps {
 
 export default function HomeTopBar({ user, profile }: HomeTopBarProps) {
   return (
-    <nav className="bg-background sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between border-b border-border">
+    <nav className="bg-background/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/15">
+      <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2">
             <Image
@@ -24,52 +23,49 @@ export default function HomeTopBar({ user, profile }: HomeTopBarProps) {
               height={36}
               className="shrink-0"
             />
-            <span className="font-bold text-base sm:text-lg font-[family-name:var(--font-gaegu)]" style={{ color: '#FFBC0A' }}>HackyMarket</span>
+            <span className="font-extrabold text-xl sm:text-2xl font-[family-name:var(--font-gaegu)] text-accent-on-blue">HackyMarket</span>
           </Link>
-          {/* Desktop nav - hide on mobile */}
-          <div className="hidden lg:flex items-center gap-4 text-sm">
+          <div className="hidden lg:flex items-center gap-5 text-base font-bold">
             <NavLink href="/portfolio">Portfolio</NavLink>
             <NavLink href="/leaderboard">Leaderboard</NavLink>
-            <Link href="/tv" className="bg-accent/15 text-accent hover:bg-accent/25 font-medium px-2.5 py-0.5 rounded-full transition-colors">Live</Link>
+            <Link href="/tv" className="bg-accent text-card-text font-semibold px-3 py-1 rounded-full text-xs uppercase tracking-wide hover:bg-accent-hover transition-colors">Live</Link>
             {profile?.is_admin && <NavLink href="/admin">Admin</NavLink>}
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <ThemeToggle />
           {user && profile ? (
-            <div className="text-sm">
+            <div className="text-sm flex items-center gap-1.5">
               <Link
                 href="/portfolio"
-                className="text-foreground hover:text-accent transition-colors mr-1"
+                className="text-white/90 hover:text-white transition-colors"
               >
                 {profile.username}
               </Link>
-              <span className="text-accent font-medium">
+              <span className="text-accent-on-blue font-semibold">
                 {formatCoins(profile.balance)} <CoinIcon />
               </span>
             </div>
           ) : (
             <Link
               href="/login"
-              className="text-sm font-medium text-accent hover:text-accent/80 transition-colors"
+              className="text-sm font-semibold text-accent-on-blue transition-colors"
             >
               Sign in
             </Link>
           )}
-          {/* Mobile nav - show only on mobile */}
           <div className="lg:hidden">
             <details className="relative">
-              <summary className="list-none cursor-pointer p-2 min-h-[44px] min-w-[44px] flex items-center justify-center border border-border rounded hover:bg-card-hover">
+              <summary className="list-none cursor-pointer p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded hover:bg-white/10 text-white">
                 <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M3 12h18M3 6h18M3 18h18" />
                 </svg>
               </summary>
-              <nav className="fixed right-2 top-[60px] bg-card border border-border rounded-lg shadow-lg min-w-[180px] max-w-[calc(100vw-16px)] z-50 overflow-hidden">
-                <NavLink href="/portfolio" className="block px-4 py-3 hover:bg-card-hover border-b border-border">Portfolio</NavLink>
-                <NavLink href="/leaderboard" className="block px-4 py-3 hover:bg-card-hover border-b border-border">Leaderboard</NavLink>
-                {profile?.is_admin && <NavLink href="/admin" className="block px-4 py-3 hover:bg-card-hover border-b border-border">Admin</NavLink>}
-                {user && <LogoutButton className="w-full text-left block px-4 py-3 hover:bg-card-hover text-foreground" />}
+              <nav className="fixed right-2 top-[60px] bg-card border border-border/60 rounded-xl shadow-xl min-w-[180px] max-w-[calc(100vw-16px)] z-50 overflow-hidden text-card-text">
+                <NavLink href="/portfolio" className="block px-4 py-3 hover:bg-gray-50 border-b border-border/30 text-card-text!">Portfolio</NavLink>
+                <NavLink href="/leaderboard" className="block px-4 py-3 hover:bg-gray-50 border-b border-border/30 text-card-text!">Leaderboard</NavLink>
+                {profile?.is_admin && <NavLink href="/admin" className="block px-4 py-3 hover:bg-gray-50 border-b border-border/30 text-card-text!">Admin</NavLink>}
+                {user && <LogoutButton className="w-full text-left block px-4 py-3 hover:bg-gray-50 text-card-text" />}
               </nav>
             </details>
           </div>

@@ -44,7 +44,7 @@ export default async function AdminPage() {
 
   return (
     <div>
-      <h1 className="text-xl font-bold mb-6">Admin</h1>
+      <h1 className="text-4xl font-extrabold text-white mb-6">Admin</h1>
       <AdminPanel
         activeMarkets={(markets ?? []) as Market[]}
         allMarkets={(allMarkets ?? []) as Market[]}

@@ -102,18 +102,18 @@ export default async function LeaderboardPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-foreground mb-2"><CoinIcon /> Leaderboard</h1>
-        <p className="text-sm text-muted">
+        <h1 className="text-4xl font-extrabold text-white mb-2"><CoinIcon /> Leaderboard</h1>
+        <p className="text-sm text-white/70">
           Verified users ranked by total portfolio value (balance + positions)
         </p>
       </div>
 
       {leaderboard.length === 0 ? (
-        <p className="text-muted py-8 text-center">
+        <p className="text-white/80 font-medium py-8 text-center">
           No users on the leaderboard yet
         </p>
       ) : (
-        <div className="border-t border-border">
+        <div className="border-t border-white/20">
           {leaderboard.map((entry, index) => {
             const rank = index + 1;
             const isCurrentUser = entry.id === user?.id;
@@ -135,22 +135,22 @@ export default async function LeaderboardPage() {
 
       {/* Footer stats */}
       {leaderboard.length > 0 && (
-        <div className="border-t border-border mt-8">
-          <div className="grid grid-cols-3 divide-x divide-border">
+        <div className="border-t border-white/20 mt-8">
+          <div className="grid grid-cols-3 divide-x divide-white/20">
             <div className="py-4 px-2 text-center">
-              <div className="text-2xl font-bold text-foreground">{leaderboard.length}</div>
-              <div className="text-xs text-muted">Verified Users</div>
+              <div className="text-2xl font-bold text-white">{leaderboard.length}</div>
+              <div className="text-xs text-white/60">Verified Users</div>
             </div>
             <div className="py-4 px-2 text-center">
-              <div className="text-2xl font-bold text-foreground">
+              <div className="text-2xl font-bold text-white">
                 {formatCoins(
                   leaderboard.reduce((sum, entry) => sum + entry.balance, 0)
                 )} <CoinIcon />
               </div>
-              <div className="text-xs text-muted">Total Balance</div>
+              <div className="text-xs text-white/60">Total Balance</div>
             </div>
             <div className="py-4 px-2 text-center">
-              <div className="text-2xl font-bold text-foreground">
+              <div className="text-2xl font-bold text-white">
                 {formatCoins(
                   leaderboard.reduce(
                     (sum, entry) => sum + entry.portfolio_value,
@@ -158,7 +158,7 @@ export default async function LeaderboardPage() {
                   ) / leaderboard.length
                 )} <CoinIcon />
               </div>
-              <div className="text-xs text-muted">Avg Portfolio</div>
+              <div className="text-xs text-white/60">Avg Portfolio</div>
             </div>
           </div>
         </div>

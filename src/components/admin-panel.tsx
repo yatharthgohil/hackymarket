@@ -78,18 +78,18 @@ function FeaturedMarketForm({
   }
 
   return (
-    <div className="bg-card border border-border rounded-lg p-4">
-      <h2 className="text-lg font-bold mb-4">Featured Market (TV page)</h2>
+    <div className="bg-card border border-border/60 rounded-xl p-4 shadow-sm">
+      <h2 className="text-lg font-bold mb-4 text-card-text">Featured Market (TV page)</h2>
       {markets.length === 0 ? (
-        <p className="text-muted text-sm">No active markets. Create one first.</p>
+        <p className="text-card-muted text-sm">No active markets. Create one first.</p>
       ) : (
         <form onSubmit={handleSetFeatured} className="flex flex-wrap items-end gap-3">
           <div className="flex-1 min-w-[200px]">
-            <label className="block text-sm text-muted mb-1">Market to feature</label>
+            <label className="block text-sm text-card-muted mb-1">Market to feature</label>
             <select
               value={selectedMarket}
               onChange={(e) => setSelectedMarket(e.target.value)}
-              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:border-accent"
+              className="w-full px-3 py-2 bg-white border border-border/60 rounded-lg text-card-text focus:outline-none focus:ring-2 focus:ring-accent/40"
             >
               <option value="">Select a market...</option>
               {markets.map((m) => (
@@ -102,12 +102,12 @@ function FeaturedMarketForm({
           <button
             type="submit"
             disabled={loading || !selectedMarket}
-            className="py-2 px-4 bg-accent hover:bg-accent-hover text-background font-medium rounded-lg transition-colors disabled:opacity-50"
+            className="py-2 px-4 rounded-lg font-medium btn-accent disabled:opacity-50 disabled:transform-none disabled:shadow-none"
           >
             {loading ? "Saving..." : "Set as featured"}
           </button>
           {featuredMarketId && (
-            <span className="text-xs text-muted">
+            <span className="text-xs text-card-muted">
               Current: {markets.find((m) => m.id === featuredMarketId)?.question ?? "—"}
             </span>
           )}
@@ -170,36 +170,36 @@ function CreateMarketForm() {
   }
 
   return (
-    <div className="bg-card border border-border rounded-lg p-4">
-      <h2 className="text-lg font-bold mb-4">Create Market</h2>
+    <div className="bg-card border border-border/60 rounded-xl p-4 shadow-sm">
+      <h2 className="text-lg font-bold mb-4 text-card-text">Create Market</h2>
 
       <form onSubmit={handleCreate} className="space-y-4">
         <div>
-          <label className="block text-sm text-muted mb-1">Question</label>
+          <label className="block text-sm text-card-muted mb-1">Question</label>
           <input
             type="text"
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
             placeholder="Will X happen by Y date?"
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:border-accent"
+            className="w-full px-3 py-2 bg-white border border-border/60 rounded-lg text-card-text focus:outline-none focus:ring-2 focus:ring-accent/40"
             required
           />
         </div>
 
         <div>
-          <label className="block text-sm text-muted mb-1">
+          <label className="block text-sm text-card-muted mb-1">
             Description (optional)
           </label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             rows={2}
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:border-accent resize-none"
+            className="w-full px-3 py-2 bg-white border border-border/60 rounded-lg text-card-text focus:outline-none focus:ring-2 focus:ring-accent/40 resize-none"
           />
         </div>
 
         <div>
-          <label className="block text-sm text-muted mb-1">
+          <label className="block text-sm text-card-muted mb-1">
             Initial Probability: {probability}%
           </label>
           <input
@@ -210,14 +210,14 @@ function CreateMarketForm() {
             onChange={(e) => setProbability(parseInt(e.target.value))}
             className="w-full accent-accent"
           />
-          <div className="flex justify-between text-xs text-muted">
+            <div className="flex justify-between text-xs text-card-muted">
             <span>1%</span>
             <span>99%</span>
           </div>
         </div>
 
         <div>
-          <label className="block text-sm text-muted mb-1">
+          <label className="block text-sm text-card-muted mb-1">
             Initial Liquidity (<CoinIcon />)
           </label>
           <input
@@ -225,7 +225,7 @@ function CreateMarketForm() {
             value={ante}
             onChange={(e) => setAnte(e.target.value)}
             min="10"
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:border-accent"
+            className="w-full px-3 py-2 bg-white border border-border/60 rounded-lg text-card-text focus:outline-none focus:ring-2 focus:ring-accent/40"
           />
         </div>
 
@@ -242,7 +242,7 @@ function CreateMarketForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-2 bg-accent hover:bg-accent-hover text-background font-medium rounded-lg transition-colors disabled:opacity-50"
+          className="w-full py-2 rounded-lg font-medium btn-accent disabled:opacity-50 disabled:transform-none disabled:shadow-none"
         >
           {loading ? "Creating..." : "Create Market"}
         </button>
@@ -302,19 +302,19 @@ function ResolveMarketForm({ markets }: { markets: Market[] }) {
   }
 
   return (
-    <div className="bg-card border border-border rounded-lg p-4">
-      <h2 className="text-lg font-bold mb-4">Resolve Market</h2>
+    <div className="bg-card border border-border/60 rounded-xl p-4 shadow-sm">
+      <h2 className="text-lg font-bold mb-4 text-card-text">Resolve Market</h2>
 
       {markets.length === 0 ? (
-        <p className="text-muted text-sm">No active markets to resolve.</p>
+        <p className="text-card-muted text-sm">No active markets to resolve.</p>
       ) : (
         <form onSubmit={handleResolve} className="space-y-4">
           <div>
-            <label className="block text-sm text-muted mb-1">Market</label>
+            <label className="block text-sm text-card-muted mb-1">Market</label>
             <select
               value={selectedMarket}
               onChange={(e) => setSelectedMarket(e.target.value)}
-              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:border-accent"
+              className="w-full px-3 py-2 bg-white border border-border/60 rounded-lg text-card-text focus:outline-none focus:ring-2 focus:ring-accent/40"
             >
               <option value="">Select a market...</option>
               {markets.map((m) => (
@@ -326,7 +326,7 @@ function ResolveMarketForm({ markets }: { markets: Market[] }) {
           </div>
 
           <div>
-            <label className="block text-sm text-muted mb-1">Resolution</label>
+            <label className="block text-sm text-card-muted mb-1">Resolution</label>
             <div className="grid grid-cols-2 gap-2">
               {(["YES", "NO", "N/A", "PERCENT"] as const).map((opt) => (
                 <button
@@ -340,7 +340,7 @@ function ResolveMarketForm({ markets }: { markets: Market[] }) {
                         : opt === "NO"
                           ? "border-no bg-no/10 text-no"
                           : "border-accent bg-accent/10 text-accent"
-                      : "border-border text-muted hover:text-foreground"
+                      : "border-border/40 text-card-muted hover:text-card-text"
                   }`}
                 >
                   {opt === "PERCENT" ? "%" : opt}
@@ -351,7 +351,7 @@ function ResolveMarketForm({ markets }: { markets: Market[] }) {
 
           {resolution === "PERCENT" && (
             <div>
-              <label className="block text-sm text-muted mb-1">
+              <label className="block text-sm text-card-muted mb-1">
                 Percentage: {customPct}%
               </label>
               <input
@@ -517,15 +517,15 @@ function RollbackTradesForm({ markets }: { markets: Market[] }) {
   }
 
   return (
-    <div className="bg-card border border-border rounded-lg p-4">
-      <h2 className="text-lg font-bold mb-4">Rollback Trades</h2>
+    <div className="bg-card border border-border/60 rounded-xl p-4 shadow-sm">
+      <h2 className="text-lg font-bold mb-4 text-card-text">Rollback Trades</h2>
 
       <div className="mb-4">
-        <label className="block text-sm text-muted mb-1">Market</label>
+        <label className="block text-sm text-card-muted mb-1">Market</label>
         <select
           value={selectedMarket}
           onChange={(e) => setSelectedMarket(e.target.value)}
-          className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:border-accent"
+          className="w-full px-3 py-2 bg-white border border-border/60 rounded-lg text-card-text focus:outline-none focus:ring-2 focus:ring-accent/40"
         >
           <option value="">Select a market...</option>
           {markets.map((m) => (
@@ -537,15 +537,15 @@ function RollbackTradesForm({ markets }: { markets: Market[] }) {
       </div>
 
       {loading ? (
-        <p className="text-muted text-sm">Loading trades...</p>
+        <p className="text-card-muted text-sm">Loading trades...</p>
       ) : !selectedMarket ? null : trades.length === 0 ? (
-        <p className="text-muted text-sm">No trades for this market.</p>
+        <p className="text-card-muted text-sm">No trades for this market.</p>
       ) : (
         <>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-muted text-left border-b border-border">
+                <tr className="text-card-muted text-left border-b border-border/30">
                   <th className="py-2 pr-2 w-8">
                     <input
                       type="checkbox"
@@ -609,7 +609,7 @@ function RollbackTradesForm({ markets }: { markets: Market[] }) {
                         {formatShares(trade.shares)}
                       </span>
                     </td>
-                    <td className="py-2 pr-2 text-muted">
+                    <td className="py-2 pr-2 text-card-muted">
                       {timeAgo(trade.created_at)}
                     </td>
                   </tr>
