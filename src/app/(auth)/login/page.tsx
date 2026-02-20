@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useSearchParams } from "next/navigation";
 
-export default function LoginPage() {
+function LoginForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
@@ -73,5 +73,24 @@ export default function LoginPage() {
         {error && <p className="text-no text-sm mt-4">{error}</p>}
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center px-4 auth-page-background">
+          <div className="w-full max-w-sm text-center">
+            <h1 className="text-3xl font-bold mb-2" style={{ color: "#FFBC0A" }}>
+              Sign in to HackyMarket
+            </h1>
+            <p className="text-muted text-sm">Loading...</p>
+          </div>
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }
